@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caderno de Receitas Social — Guia Vitta</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,500&family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #2b1d1a;
+  --bg-soft:   #392924;
+  --cream:     #fdf8f3;
+  --cream2:    #f4ebe1;
+  --rose:      #d4849a;
+  --rose-dark: #b06080;
+  --gold:      #c9a44a;
+  --terracota: #b5573f;
+  --terracota-bg: rgba(181,87,63,.14);
+  --green:     #6a9c5a;
+  --ink:       #2b1d1a;
+  --ink-soft:  #6b5a52;
+  --ink-faint: #a3938a;
+  --trans:     .2s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'Comfortaa',sans-serif;
+  background:var(--bg);
+  background-image: radial-gradient(ellipse 70% 50% at 15% 0%, rgba(212,132,154,.10) 0%, transparent 60%);
+  color:var(--cream);
+  min-height:100vh;
+}
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:rgba(253,248,243,.15); border-radius:3px; }
+
+.shell { display:flex; min-height:100vh; }
+
+/* ── SIDEBAR ── */
+.shelf {
+  width:228px; flex-shrink:0; background:var(--bg-soft);
+  border-right:1px solid rgba(253,248,243,.08);
+  display:flex; flex-direction:column;
+  position:fixed; top:0; bottom:0; left:0; z-index:20;
+}
+.shelf-brand { padding:26px 24px 16px; }
+.shelf-brand .mark { font-family:'Playfair Display',serif; font-style:italic; font-weight:600; font-size:1.4rem; color:var(--rose); line-height:1; }
+.shelf-brand .sub { font-size:.62rem; letter-spacing:1.4px; text-transform:uppercase; color:var(--ink-faint); margin-top:6px; }
+
+.client-fixed { padding:0 18px 14px; display:flex; align-items:center; gap:10px; }
+.client-fixed .dot { width:11px; height:11px; border-radius:50%; flex-shrink:0; }
+.client-fixed .name { font-size:.92rem; font-weight:700; color:var(--cream); }
+.client-fixed .switch-link { display:block; font-size:.66rem; color:var(--ink-faint); margin-top:2px; text-decoration:none; }
+.client-fixed .switch-link:hover { color:var(--rose); }
+
+.shelf-divider { height:1px; background:rgba(253,248,243,.08); margin:6px 18px 10px; }
+
+.shelf-nets { padding:0 14px; display:flex; flex-direction:column; gap:4px; flex:1; }
+.net-btn {
+  display:flex; align-items:center; gap:11px; padding:11px 12px;
+  border-radius:12px; border:none; background:none; cursor:pointer;
+  color:rgba(253,248,243,.55); font-family:'Comfortaa',sans-serif;
+  font-size:.84rem; font-weight:600; text-align:left; width:100%;
+  transition:var(--trans); position:relative;
+}
+.net-btn:hover { background:rgba(253,248,243,.05); color:var(--cream); }
+.net-btn.active { background:rgba(212,132,154,.16); color:var(--cream); }
+.net-btn.active::before { content:''; position:absolute; left:0; top:10%; bottom:10%; width:3px; background:var(--rose); border-radius:0 3px 3px 0; }
+.net-icon { width:19px; height:19px; flex-shrink:0; opacity:.9; }
+.net-soon { margin-left:auto; font-size:.56rem; letter-spacing:.5px; text-transform:uppercase; color:var(--ink-faint); background:rgba(253,248,243,.06); padding:3px 7px; border-radius:6px; }
+
+.shelf-foot { padding:16px 22px; border-top:1px solid rgba(253,248,243,.08); }
+.shelf-foot .label { font-size:.6rem; letter-spacing:1px; text-transform:uppercase; color:var(--ink-faint); margin-bottom:4px; }
+.shelf-foot .val { font-size:.78rem; color:rgba(253,248,243,.7); }
+
+/* ── MAIN ── */
+.main { margin-left:228px; flex:1; min-height:100vh; display:flex; flex-direction:column; }
+.topbar { padding:26px 34px 16px; display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+.topbar h1 { font-family:'Playfair Display',serif; font-weight:600; font-size:1.85rem; color:var(--cream); }
+.topbar .net-label { font-size:.76rem; color:var(--rose); letter-spacing:.4px; margin-top:4px; }
+
+.toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.btn { font-family:'Comfortaa',sans-serif; font-size:.8rem; font-weight:700; padding:9px 16px; border-radius:999px; border:1.5px solid rgba(253,248,243,.18); background:transparent; color:var(--cream); cursor:pointer; transition:var(--trans); display:inline-flex; align-items:center; gap:6px; }
+.btn:hover { background:rgba(253,248,243,.06); border-color:rgba(253,248,243,.3); }
+.btn-prim { background:var(--rose); border-color:var(--rose); color:#2b1620; }
+.btn-prim:hover { background:var(--rose-dark); border-color:var(--rose-dark); color:var(--cream); }
+.chip-filter { font-size:.72rem; font-weight:700; padding:7px 13px; border-radius:999px; border:1px solid rgba(253,248,243,.15); background:transparent; color:rgba(253,248,243,.6); cursor:pointer; transition:var(--trans); }
+.chip-filter.active { background:var(--cream); color:var(--ink); border-color:var(--cream); }
+
+.late-banner { margin:0 34px 4px; padding:14px 18px; border-radius:14px; background:var(--terracota-bg); border:1px solid rgba(181,87,63,.4); display:none; align-items:center; gap:12px; }
+.late-banner.show { display:flex; }
+.late-banner .ic { font-size:1.25rem; line-height:1; }
+.late-banner .txt strong { color:var(--terracota); font-size:.86rem; }
+.late-banner .txt span { display:block; font-size:.72rem; color:rgba(253,248,243,.6); margin-top:2px; }
+
+.board-wrap { flex:1; padding:14px 34px 40px; overflow-x:auto; }
+.board { display:grid; grid-template-columns:repeat(4, minmax(240px,1fr)); gap:16px; min-width:920px; }
+.col { background:rgba(253,248,243,.03); border-radius:20px; padding:14px; display:flex; flex-direction:column; gap:10px; min-height:240px; }
+.col-head { display:flex; align-items:center; justify-content:space-between; padding:4px 8px 8px; font-size:.72rem; font-weight:700; letter-spacing:.4px; text-transform:uppercase; color:rgba(253,248,243,.45); }
+.col-head .n { background:rgba(253,248,243,.08); padding:2px 9px; border-radius:999px; color:var(--cream); }
+
+.ficha { background:var(--cream); border-radius:14px; position:relative; padding:14px 16px 14px 20px; cursor:pointer; transition:var(--trans); box-shadow:0 2px 8px rgba(20,12,10,.18); }
+.ficha:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(20,12,10,.3); }
+.ficha::before { content:''; position:absolute; left:0; top:8px; bottom:8px; width:5px; border-radius:0 4px 4px 0; background:var(--marker, var(--rose)); }
+.ficha.late { background:#fdf1ec; }
+.ficha.late::before { background:var(--terracota); }
+.ficha-late-flag { display:flex; align-items:center; gap:5px; font-size:.64rem; font-weight:700; color:var(--terracota); margin-bottom:6px; text-transform:uppercase; letter-spacing:.3px; }
+.ficha-tag { display:inline-block; font-size:.6rem; font-weight:700; padding:3px 9px; border-radius:999px; margin-bottom:8px; letter-spacing:.2px; }
+.ficha-tema { font-family:'Playfair Display',serif; font-size:.91rem; font-weight:600; color:var(--ink); line-height:1.35; }
+.ficha-meta { display:flex; gap:10px; flex-wrap:wrap; margin-top:9px; font-size:.66rem; color:var(--ink-soft); }
+.ficha-meta b { color:var(--ink); }
+.ficha-foot { display:flex; align-items:center; justify-content:space-between; margin-top:10px; padding-top:9px; border-top:1px dashed rgba(43,29,26,.15); }
+.sched-dot { display:flex; align-items:center; gap:5px; font-size:.64rem; font-weight:700; }
+.sched-dot.on { color:var(--green); }
+.sched-dot.off { color:var(--ink-faint); }
+.fmt-pill { font-size:.6rem; font-weight:700; color:var(--ink-soft); background:rgba(43,29,26,.06); padding:3px 8px; border-radius:6px; }
+
+.empty-col { text-align:center; padding:30px 10px; color:rgba(253,248,243,.3); font-size:.76rem; }
+.loading-col { text-align:center; padding:30px 10px; color:rgba(253,248,243,.3); font-size:.76rem; }
+
+.overlay { position:fixed; inset:0; background:rgba(15,9,8,.6); z-index:100; display:flex; align-items:center; justify-content:center; padding:24px; }
+.modal { background:var(--cream); border-radius:22px; width:min(560px,100%); max-height:88vh; overflow-y:auto; padding:30px 32px; box-shadow:0 30px 80px rgba(0,0,0,.4); color:var(--ink); }
+.modal-head { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:6px; }
+.modal-head h2 { font-family:'Playfair Display',serif; font-size:1.22rem; font-weight:600; line-height:1.3; }
+.modal .close-x { background:none; border:none; font-size:1.2rem; color:var(--ink-soft); cursor:pointer; line-height:1; }
+.modal-sub { font-size:.76rem; color:var(--ink-soft); margin-bottom:18px; }
+.modal-alert { display:flex; gap:9px; align-items:center; background:var(--terracota-bg); border:1px solid rgba(181,87,63,.35); color:var(--terracota); border-radius:12px; padding:10px 14px; font-size:.76rem; font-weight:600; margin-bottom:16px; }
+.fld { margin-bottom:16px; }
+.fld label { display:block; font-size:.66rem; letter-spacing:.6px; text-transform:uppercase; color:var(--ink-faint); font-weight:700; margin-bottom:6px; }
+.fld .static-box { font-size:.83rem; line-height:1.6; background:rgba(43,29,26,.04); border-radius:10px; padding:11px 13px; color:var(--ink); white-space:pre-wrap; }
+.row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+input[type=text], input[type=date], input[type=time], textarea, select { width:100%; font-family:'Comfortaa',sans-serif; font-size:.85rem; color:var(--ink); border:1.5px solid rgba(43,29,26,.15); border-radius:10px; padding:10px 12px; background:#fff; outline:none; transition:var(--trans); }
+input:focus, textarea:focus, select:focus { border-color:var(--rose); }
+textarea { resize:vertical; min-height:64px; font-family:'Comfortaa',sans-serif; }
+.check-line { display:flex; align-items:center; gap:9px; padding:11px 0; border-top:1px dashed rgba(43,29,26,.15); font-size:.83rem; font-weight:600; }
+.check-line input { width:auto; accent-color:var(--rose-dark); }
+.modal-actions { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+.modal-actions .btn { color:var(--ink); border-color:rgba(43,29,26,.18); }
+.modal-actions .btn:hover { background:rgba(43,29,26,.05); }
+.modal-actions .btn-prim { color:#2b1620; }
+.copy-briefing-btn { background:var(--gold); border-color:var(--gold); color:#2b1620; flex:1; justify-content:center; }
+.copy-briefing-btn:hover { background:#b8923d; border-color:#b8923d; }
+.copy-briefing-btn.copied { background:var(--green); border-color:var(--green); color:#fff; }
+
+.soon-wrap { flex:1; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:60px 30px; gap:10px; }
+.soon-wrap .ic { font-size:2.2rem; }
+.soon-wrap h2 { font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:600; }
+.soon-wrap p { font-size:.85rem; color:rgba(253,248,243,.55); max-width:380px; line-height:1.6; }
+
+.config-banner { margin:20px 34px; padding:18px 22px; border-radius:16px; background:rgba(212,132,154,.1); border:1px solid rgba(212,132,154,.3); font-size:.84rem; line-height:1.7; }
+.config-banner code { background:rgba(0,0,0,.25); padding:2px 7px; border-radius:6px; font-size:.78em; }
+.config-banner input { margin-top:10px; }
+
+@media (max-width:860px) {
+  .shelf { width:0; overflow:hidden; }
+  .main { margin-left:0; }
+  .topbar, .board-wrap, .late-banner, .config-banner { padding-left:18px; padding-right:18px; margin-left:0; margin-right:0; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <aside class="shelf">
+    <div class="shelf-brand">
+      <div class="mark">Caderno social</div>
+      <div class="sub">Guia Vitta</div>
+    </div>
+
+    <div class="client-fixed" id="client-fixed"></div>
+
+    <div class="shelf-divider"></div>
+
+    <nav class="shelf-nets" id="net-nav"></nav>
+
+    <div class="shelf-foot">
+      <div class="label">Próxima fase</div>
+      <div class="val">Agendamento direto via Meta/Buffer</div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div id="config-view" style="display:none;">
+      <div class="config-banner">
+        <strong>Conectar ao Supabase</strong><br>
+        Cole a URL e a chave anon (pública) do seu projeto Supabase. Elas ficam guardadas só no seu navegador.<br>
+        <input type="text" id="cfg-url" placeholder="https://xxxxx.supabase.co" style="margin-top:10px;">
+        <input type="text" id="cfg-key" placeholder="chave anon (public)" style="margin-top:8px;">
+        <button class="btn btn-prim" id="cfg-save" style="margin-top:12px;">Conectar</button>
+      </div>
+    </div>
+
+    <div id="board-view" style="display:none;">
+      <div class="topbar">
+        <div>
+          <h1 id="page-title">Instagram</h1>
+          <div class="net-label" id="page-sub"></div>
+        </div>
+        <div class="toolbar" id="filters"></div>
+      </div>
+
+      <div class="late-banner" id="late-banner">
+        <div class="ic">⏳</div>
+        <div class="txt">
+          <strong id="late-title"></strong>
+          <span>Esses posts já passaram do horário planejado e ainda não foram marcados como publicados.</span>
+        </div>
+      </div>
+
+      <div class="board-wrap">
+        <div class="board" id="board"></div>
+      </div>
+    </div>
+
+    <div id="soon-view" style="display:none;"></div>
+
+  </main>
+</div>
+
+<script>
+/* ───────────────────────── CONFIG SUPABASE ───────────────────────── */
+
+const CFG_KEY = 'caderno_social_supabase_cfg';
+let sb = null;
+
+function loadCfg() {
+  try { return JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); } catch(e) { return null; }
+}
+
+function initSupabase() {
+  const cfg = loadCfg();
+  if (!cfg || !cfg.url || !cfg.key) {
+    document.getElementById('config-view').style.display = 'block';
+    return false;
+  }
+  sb = supabase.createClient(cfg.url, cfg.key);
+  return true;
+}
+
+document.getElementById('cfg-save').addEventListener('click', () => {
+  const url = document.getElementById('cfg-url').value.trim();
+  const key = document.getElementById('cfg-key').value.trim();
+  if (!url || !key) return;
+  localStorage.setItem(CFG_KEY, JSON.stringify({url, key}));
+  document.getElementById('config-view').style.display = 'none';
+  if (initSupabase()) boot();
+});
+
+/* ───────────────────────── CLIENTE FIXO DESTA PÁGINA ───────────────────────── */
+/* Esta página pertence a um único cliente. Trocar aqui muda quem aparece. */
+const CLIENTE_ID = 'guia-vitta';
+const CLIENTE_NOME = 'Guia Vitta';
+const CLIENTE_COR = '#0d3b66';
+
+/* ───────────────────────── DADOS ESTÁTICOS ───────────────────────── */
+
+const NETWORKS = [
+  { key:'instagram', label:'Instagram', icon:'ig', ready:true },
+  { key:'tiktok',     label:'TikTok',     icon:'tk', ready:false },
+  { key:'facebook',   label:'Facebook',   icon:'fb', ready:false },
+  { key:'whatsapp',   label:'WhatsApp (status)', icon:'wa', ready:false },
+];
+
+const STATUSES = [
+  { key:'planejar',  label:'A planejar' },
+  { key:'design',    label:'Em produção' },
+  { key:'pronto',    label:'Pronto p/ agendar' },
+  { key:'publicado', label:'Publicado' },
+];
+
+const PILAR_COLOR = {
+  'Educação Profunda': '#9b7fd1',
+  'Prova Social':      '#5aa68f',
+  'Bastidores':         '#d18b5a',
+  'Venda Direta':       '#d4849a',
+  'Geral':              '#c9a44a',
+};
+
+const ICONS = {
+  ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.2" cy="6.8" r="1"/></svg>',
+  tk: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><path d="M14 4v9.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c0 2.5 2 4.4 4.5 4.5"/></svg>',
+  fb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><path d="M15 4h-2.2A3.8 3.8 0 0 0 9 7.8V10H7v3h2v7h3v-7h2.3l.7-3H12V8a1 1 0 0 1 1-1h2z"/></svg>',
+  wa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><circle cx="12" cy="12" r="9"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-2-2.6-1.2-.6 1A4.2 4.2 0 0 1 10 10.6l1-.6L9.8 7.4 9 9.5z"/></svg>',
+};
+
+/* ───────────────────────── ESTADO ───────────────────────── */
+
+let STATE = {
+  activeClient: CLIENTE_ID,
+  activeNet: 'instagram',
+  filter: 'all',
+  posts: [],
+};
+
+/* ───────────────────────── BOOT / DADOS ───────────────────────── */
+
+async function boot() {
+  document.getElementById('board-view').style.display = 'block';
+  await renderAll();
+}
+
+async function fetchPosts() {
+  if (!STATE.activeClient) { STATE.posts = []; return; }
+  const { data, error } = await sb.from('posts')
+    .select('*')
+    .eq('cliente_id', STATE.activeClient)
+    .eq('rede_id', STATE.activeNet)
+    .order('data', { ascending: true });
+  if (error) { console.error(error); STATE.posts = []; return; }
+  STATE.posts = data || [];
+}
+
+/* ───────────────────────── HELPERS ───────────────────────── */
+
+function fmtDateBR(iso) {
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+function fmtTime(t) { return t ? t.slice(0,5) : ''; }
+
+function isLate(post) {
+  if (post.status === 'publicado') return false;
+  const dt = new Date(post.data + 'T' + post.horario);
+  return dt.getTime() < Date.now();
+}
+function lateLabel(post) {
+  const dt = new Date(post.data + 'T' + post.horario);
+  const diffH = Math.floor((Date.now() - dt.getTime()) / 3600000);
+  if (diffH < 24) return diffH <= 0 ? 'atrasado' : diffH + 'h atrasado';
+  const diffD = Math.floor(diffH/24);
+  return diffD + (diffD>1?' dias':' dia') + ' atrasado';
+}
+
+function clienteNome(id) {
+  return CLIENTE_NOME;
+}
+
+/* ───────────────────────── RENDER: SIDEBAR ───────────────────────── */
+
+function renderClientFixed() {
+  document.getElementById('client-fixed').innerHTML = `
+    <span class="dot" style="background:${CLIENTE_COR}"></span>
+    <div>
+      <div class="name">${CLIENTE_NOME}</div>
+    </div>
+  `;
+}
+
+function renderNetNav() {
+  const nav = document.getElementById('net-nav');
+  nav.innerHTML = NETWORKS.map(n => `
+    <button class="net-btn ${n.key===STATE.activeNet?'active':''}" data-net="${n.key}">
+      ${ICONS[n.icon]}
+      <span>${n.label}</span>
+      ${!n.ready ? '<span class="net-soon">em breve</span>' : ''}
+    </button>
+  `).join('');
+  nav.querySelectorAll('.net-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      STATE.activeNet = btn.dataset.net;
+      STATE.filter = 'all';
+      await renderAll();
+    });
+  });
+}
+
+/* ───────────────────────── RENDER: BOARD ───────────────────────── */
+
+async function renderAll() {
+  renderClientFixed();
+  renderNetNav();
+
+  const net = NETWORKS.find(n => n.key === STATE.activeNet);
+  const boardView = document.getElementById('board-view');
+  const soonView = document.getElementById('soon-view');
+
+  if (!net.ready) {
+    boardView.querySelector('.topbar').style.display = 'none';
+    boardView.querySelector('.late-banner') && (document.getElementById('late-banner').classList.remove('show'));
+    document.getElementById('board').innerHTML = '';
+    soonView.style.display = 'flex';
+    soonView.innerHTML = `
+      <div class="soon-wrap">
+        <div class="ic">${ICONS[net.icon].replace('class="net-icon"','style="width:38px;height:38px;color:var(--rose)"')}</div>
+        <h2>${net.label} está chegando</h2>
+        <p>Em breve você vai organizar conteúdo para ${net.label} aqui também, com o mesmo fluxo do Instagram.</p>
+      </div>`;
+    return;
+  }
+  soonView.style.display = 'none';
+  boardView.querySelector('.topbar').style.display = 'flex';
+
+  document.getElementById('page-title').textContent = net.label;
+  document.getElementById('page-sub').textContent = clienteNome(STATE.activeClient);
+
+  await fetchPosts();
+  renderFilters();
+  renderBoard();
+}
+
+function renderFilters() {
+  const pilares = ['all', ...new Set(STATE.posts.map(p => p.pilar))];
+  const wrap = document.getElementById('filters');
+  wrap.innerHTML = pilares.map(p => `
+    <button class="chip-filter ${STATE.filter===p?'active':''}" data-pilar="${p}">${p==='all'?'Todos':p}</button>
+  `).join('') + `<button class="btn btn-prim" id="add-post-btn">+ Novo post</button>`;
+
+  wrap.querySelectorAll('.chip-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      STATE.filter = btn.dataset.pilar;
+      renderBoard();
+      renderFilters();
+    });
+  });
+  wrap.querySelector('#add-post-btn').addEventListener('click', () => openModal(null));
+}
+
+function renderBoard() {
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+  let lateCount = 0;
+
+  const posts = STATE.posts.filter(p => STATE.filter==='all' || p.pilar===STATE.filter);
+
+  STATUSES.forEach(stage => {
+    const col = document.createElement('div');
+    col.className = 'col';
+    const items = posts.filter(p => p.status === stage.key)
+      .sort((a,b) => (isLate(b)?1:0) - (isLate(a)?1:0));
+
+    col.innerHTML = `<div class="col-head"><span>${stage.label}</span><span class="n">${items.length}</span></div>`;
+    if (items.length === 0) col.innerHTML += `<div class="empty-col">Nenhum post aqui ainda</div>`;
+
+    items.forEach(p => {
+      const late = isLate(p);
+      if (late) lateCount++;
+      const color = PILAR_COLOR[p.pilar] || '#c9a44a';
+      const card = document.createElement('div');
+      card.className = 'ficha' + (late ? ' late' : '');
+      card.style.setProperty('--marker', color);
+      card.innerHTML = `
+        ${late ? `<div class="ficha-late-flag">⏳ ${lateLabel(p)}</div>` : ''}
+        <span class="ficha-tag" style="background:${color}22; color:${color};">${p.pilar}</span>
+        <div class="ficha-tema">${p.tema}</div>
+        <div class="ficha-meta">
+          <span>📅 <b>${p.dia_semana ? p.dia_semana.slice(0,3) : ''} ${fmtDateBR(p.data)}</b></span>
+          <span>🕐 <b>${fmtTime(p.horario)}</b></span>
+        </div>
+        <div class="ficha-foot">
+          <span class="fmt-pill">${p.formato}</span>
+          <span class="sched-dot ${p.agendado?'on':'off'}">${p.agendado ? '● agendado' : '○ não agendado'}</span>
+        </div>
+      `;
+      card.addEventListener('click', () => openModal(p.id));
+      col.appendChild(card);
+    });
+
+    board.appendChild(col);
+  });
+
+  const banner = document.getElementById('late-banner');
+  if (lateCount > 0) {
+    banner.classList.add('show');
+    document.getElementById('late-title').textContent = lateCount === 1 ? '1 post atrasado' : lateCount + ' posts atrasados';
+  } else {
+    banner.classList.remove('show');
+  }
+}
+
+/* ───────────────────────── BRIEFING PARA COPIAR ───────────────────────── */
+
+function montarBriefingTexto(p) {
+  const linhas = [
+    `CLIENTE: ${clienteNome(STATE.activeClient)}`,
+    `REDE: ${NETWORKS.find(n=>n.key===STATE.activeNet)?.label || STATE.activeNet}`,
+    `DATA: ${fmtDateBR(p.data)} (${p.dia_semana || ''}) às ${fmtTime(p.horario)}`,
+    `FORMATO: ${p.formato}`,
+    `PILAR: ${p.pilar}`,
+    `TEMA: ${p.tema}`,
+  ];
+  if (p.objetivo) linhas.push(`OBJETIVO: ${p.objetivo}`);
+  if (p.cta) linhas.push(`CTA PRINCIPAL: ${p.cta}`);
+  if (p.hashtags) linhas.push(`HASHTAGS: ${p.hashtags}`);
+  linhas.push('');
+  linhas.push('BRIEFING VISUAL:');
+  linhas.push(p.briefing_visual || '(sem briefing visual cadastrado ainda)');
+  if (p.story_apoio) {
+    linhas.push('');
+    linhas.push('STORY DE APOIO:');
+    linhas.push(p.story_apoio);
+  }
+  return linhas.join('\n');
+}
+
+async function copiarBriefing(postId, btn) {
+  const post = STATE.posts.find(p => p.id === postId);
+  const texto = montarBriefingTexto(post);
+  try {
+    await navigator.clipboard.writeText(texto);
+    btn.textContent = '✓ Briefing copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 Copiar briefing'; btn.classList.remove('copied'); }, 2000);
+  } catch(e) {
+    alert('Não foi possível copiar automaticamente. Texto do briefing:\n\n' + texto);
+  }
+}
+
+/* ───────────────────────── MODAL ───────────────────────── */
+
+function openModal(postId) {
+  const isNew = !postId;
+  const post = isNew
+    ? { id:null, data:new Date().toISOString().slice(0,10), dia_semana:'', horario:'19:00', formato:'Carrossel', tema:'', objetivo:'', cta:'', hashtags:'', legenda:'', briefing_visual:'', story_apoio:'', pilar:'Educação Profunda', status:'planejar', agendado:false }
+    : STATE.posts.find(p => p.id === postId);
+
+  const late = !isNew && isLate(post);
+
+  const overlay = document.createElement('div');
+  overlay.className = 'overlay';
+  overlay.innerHTML = `
+    <div class="modal">
+      <div class="modal-head">
+        <h2>${isNew ? 'Novo post' : post.tema}</h2>
+        <button class="close-x" id="m-close-x">✕</button>
+      </div>
+      <div class="modal-sub">${clienteNome(STATE.activeClient)} · ${NETWORKS.find(n=>n.key===STATE.activeNet).label}${!isNew ? ' · ' + post.formato : ''}</div>
+
+      ${late ? `<div class="modal-alert">⏳ Este post está ${lateLabel(post)}. Atualize a data ou marque como publicado.</div>` : ''}
+
+      <div class="fld">
+        <label>Tema / ideia do post</label>
+        <textarea id="m-tema" placeholder="Ex: 5 erros que você comete ao precificar">${post.tema}</textarea>
+      </div>
+
+      <div class="row2">
+        <div class="fld"><label>Data</label><input type="date" id="m-date" value="${post.data}"></div>
+        <div class="fld"><label>Horário</label><input type="time" id="m-time" value="${fmtTime(post.horario)}"></div>
+      </div>
+
+      <div class="row2">
+        <div class="fld">
+          <label>Formato</label>
+          <input type="text" id="m-formato" value="${post.formato || ''}" placeholder="Carrossel, Reel, Post estático...">
+        </div>
+        <div class="fld">
+          <label>Pilar de conteúdo</label>
+          <select id="m-pilar">
+            ${Object.keys(PILAR_COLOR).map(p => `<option ${p===post.pilar?'selected':''}>${p}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+
+      <div class="fld"><label>Objetivo</label><input type="text" id="m-objetivo" value="${post.objetivo || ''}" placeholder="Objetivo de negócio desse post"></div>
+      <div class="fld"><label>CTA principal</label><input type="text" id="m-cta" value="${post.cta || ''}" placeholder="Ex: Link na bio para testar grátis"></div>
+      <div class="fld"><label>Hashtags principais</label><input type="text" id="m-hashtags" value="${post.hashtags || ''}" placeholder="#Marca #Nicho ..."></div>
+
+      <div class="fld">
+        <label>Briefing visual (para o Claude Design)</label>
+        <textarea id="m-briefing" style="min-height:110px;" placeholder="Cole ou escreva aqui o briefing visual completo...">${post.briefing_visual || ''}</textarea>
+      </div>
+
+      <div class="fld"><label>Story de apoio</label><textarea id="m-story" placeholder="Stories que acompanham esse post, se houver">${post.story_apoio || ''}</textarea></div>
+
+      <div class="fld">
+        <label>Legenda completa (cole aqui quando estiver pronta)</label>
+        <textarea id="m-legenda" placeholder="Cole aqui a legenda final com SEO, CTA e hashtags...">${post.legenda || ''}</textarea>
+      </div>
+
+      <div class="fld">
+        <label>Status</label>
+        <select id="m-status">
+          ${STATUSES.map(s => `<option value="${s.key}" ${s.key===post.status?'selected':''}>${s.label}</option>`).join('')}
+        </select>
+      </div>
+
+      <label class="check-line">
+        <input type="checkbox" id="m-agendado" ${post.agendado?'checked':''}>
+        Agendado manualmente no Instagram
+      </label>
+
+      <div class="modal-actions">
+        ${!isNew ? '<button class="btn copy-briefing-btn" id="m-copy">📋 Copiar briefing</button>' : ''}
+      </div>
+      <div class="modal-actions">
+        ${!isNew ? '<button class="btn" id="m-delete">Excluir</button>' : ''}
+        <button class="btn btn-prim" id="m-save" style="flex:1; justify-content:center;">${isNew ? 'Adicionar post' : 'Salvar alterações'}</button>
+      </div>
+    </div>
+  `;
+
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+  overlay.querySelector('#m-close-x').addEventListener('click', () => overlay.remove());
+
+  if (!isNew) {
+    overlay.querySelector('#m-copy').addEventListener('click', (e) => copiarBriefing(post.id, e.target));
+    overlay.querySelector('#m-delete').addEventListener('click', async () => {
+      if (!confirm('Excluir este post?')) return;
+      const { error } = await sb.from('posts').delete().eq('id', post.id);
+      if (error) { alert('Erro ao excluir: ' + error.message); return; }
+      overlay.remove();
+      await renderAll();
+    });
+  }
+
+  overlay.querySelector('#m-save').addEventListener('click', async () => {
+    const data = overlay.querySelector('#m-date').value;
+    const dowNames = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+    const dia_semana = dowNames[new Date(data+'T00:00:00').getDay()];
+
+    const payload = {
+      cliente_id: STATE.activeClient,
+      rede_id: STATE.activeNet,
+      tema: overlay.querySelector('#m-tema').value.trim() || 'Sem título',
+      data,
+      dia_semana,
+      horario: overlay.querySelector('#m-time').value,
+      formato: overlay.querySelector('#m-formato').value,
+      pilar: overlay.querySelector('#m-pilar').value,
+      objetivo: overlay.querySelector('#m-objetivo').value,
+      cta: overlay.querySelector('#m-cta').value,
+      hashtags: overlay.querySelector('#m-hashtags').value,
+      briefing_visual: overlay.querySelector('#m-briefing').value,
+      story_apoio: overlay.querySelector('#m-story').value,
+      legenda: overlay.querySelector('#m-legenda').value,
+      status: overlay.querySelector('#m-status').value,
+      agendado: overlay.querySelector('#m-agendado').checked,
+    };
+
+    let error;
+    if (isNew) {
+      ({ error } = await sb.from('posts').insert(payload));
+    } else {
+      ({ error } = await sb.from('posts').update(payload).eq('id', post.id));
+    }
+    if (error) { alert('Erro ao salvar: ' + error.message); return; }
+    overlay.remove();
+    await renderAll();
+  });
+}
+
+/* ───────────────────────── INIT ───────────────────────── */
+
+if (initSupabase()) boot();
+</script>
+</body>
+</html>
