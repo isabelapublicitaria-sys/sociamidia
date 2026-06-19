@@ -183,16 +183,6 @@ textarea { resize:vertical; min-height:64px; font-family:'Comfortaa',sans-serif;
 
   <main class="main">
 
-    <div id="config-view" style="display:none;">
-      <div class="config-banner">
-        <strong>Conectar ao Supabase</strong><br>
-        Cole a URL e a chave anon (pública) do seu projeto Supabase. Elas ficam guardadas só no seu navegador.<br>
-        <input type="text" id="cfg-url" placeholder="https://xxxxx.supabase.co" style="margin-top:10px;">
-        <input type="text" id="cfg-key" placeholder="chave anon (public)" style="margin-top:8px;">
-        <button class="btn btn-prim" id="cfg-save" style="margin-top:12px;">Conectar</button>
-      </div>
-    </div>
-
     <div id="board-view" style="display:none;">
       <div class="topbar">
         <div>
@@ -223,31 +213,14 @@ textarea { resize:vertical; min-height:64px; font-family:'Comfortaa',sans-serif;
 <script>
 /* ───────────────────────── CONFIG SUPABASE ───────────────────────── */
 
-const CFG_KEY = 'caderno_social_supabase_cfg';
+const SUPABASE_URL = 'https://tlnesfuvulscnhaulmjq.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRsbmVzZnV2dWxzY25oYXVsbWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4OTAyMzQsImV4cCI6MjA5NzQ2NjIzNH0.U2Ba5Z1LCCDshX0QV9rTmiNU0FxRBgYxlQ8VCeoLM8E';
 let sb = null;
 
-function loadCfg() {
-  try { return JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); } catch(e) { return null; }
-}
-
 function initSupabase() {
-  const cfg = loadCfg();
-  if (!cfg || !cfg.url || !cfg.key) {
-    document.getElementById('config-view').style.display = 'block';
-    return false;
-  }
-  sb = supabase.createClient(cfg.url, cfg.key);
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   return true;
 }
-
-document.getElementById('cfg-save').addEventListener('click', () => {
-  const url = document.getElementById('cfg-url').value.trim();
-  const key = document.getElementById('cfg-key').value.trim();
-  if (!url || !key) return;
-  localStorage.setItem(CFG_KEY, JSON.stringify({url, key}));
-  document.getElementById('config-view').style.display = 'none';
-  if (initSupabase()) boot();
-});
 
 /* ───────────────────────── CLIENTE FIXO DESTA PÁGINA ───────────────────────── */
 /* Esta página pertence a um único cliente. Trocar aqui muda quem aparece. */
