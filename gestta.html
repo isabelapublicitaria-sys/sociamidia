@@ -152,6 +152,90 @@ textarea { resize:vertical; min-height:64px; font-family:'Comfortaa',sans-serif;
 .config-banner code { background:rgba(0,0,0,.25); padding:2px 7px; border-radius:6px; font-size:.78em; }
 .config-banner input { margin-top:10px; }
 
+/* ── VIEW TOGGLE ── */
+.view-toggle { display:flex; gap:3px; background:rgba(253,248,243,.07); border-radius:10px; padding:3px; }
+.view-btn { font-family:'Comfortaa',sans-serif; font-size:.74rem; font-weight:700; padding:6px 13px; border-radius:7px; border:none; background:none; color:rgba(253,248,243,.4); cursor:pointer; transition:var(--trans); }
+.view-btn.active { background:rgba(253,248,243,.13); color:var(--cream); }
+
+/* ── MIX DE CONTEÚDO ── */
+.mix-strip { padding:0 34px 18px; }
+.mix-header { display:flex; align-items:center; gap:9px; margin-bottom:10px; }
+.mix-title { font-size:.6rem; font-weight:700; letter-spacing:.9px; text-transform:uppercase; color:rgba(253,248,243,.3); margin-right:4px; }
+.mix-month-label { font-size:.8rem; font-weight:700; color:var(--cream); }
+.mix-nav-btn { background:none; border:none; color:rgba(253,248,243,.35); font-size:1rem; cursor:pointer; padding:1px 6px; transition:var(--trans); border-radius:6px; line-height:1; }
+.mix-nav-btn:hover { color:var(--cream); background:rgba(253,248,243,.07); }
+.mix-cards { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.mix-card { background:rgba(253,248,243,.04); border-radius:14px; padding:13px 15px; border:1px solid rgba(253,248,243,.07); }
+.mix-card-top { display:flex; justify-content:space-between; align-items:flex-start; gap:6px; margin-bottom:9px; }
+.mix-pilar-name { font-size:.67rem; font-weight:700; line-height:1.35; }
+.mix-pct-badge { font-size:.58rem; color:rgba(253,248,243,.38); background:rgba(253,248,243,.07); padding:2px 7px; border-radius:999px; white-space:nowrap; flex-shrink:0; }
+.mix-nums { display:flex; gap:14px; margin-bottom:9px; }
+.mix-num .n { font-size:1.1rem; font-weight:700; line-height:1; }
+.mix-num .n sub { font-size:.65em; font-weight:400; opacity:.45; }
+.mix-num .l { font-size:.58rem; color:rgba(253,248,243,.38); margin-top:3px; }
+.mix-bar-track { height:4px; background:rgba(253,248,243,.09); border-radius:2px; overflow:hidden; margin-bottom:7px; }
+.mix-bar-fill { height:100%; border-radius:2px; transition:width .5s cubic-bezier(.4,0,.2,1); }
+.mix-status { font-size:.62rem; font-weight:600; }
+.mix-status.ok { color:var(--green); }
+.mix-status.warn { color:var(--gold); }
+.mix-status.under { color:rgba(253,248,243,.3); }
+.mix-status.over { color:var(--terracota); }
+.mix-advisory { margin-top:12px; display:flex; flex-direction:column; gap:7px; }
+.mix-alert { font-size:.78rem; line-height:1.55; padding:10px 14px; border-radius:11px; }
+.mix-alert-over { background:rgba(181,87,63,.12); border:1px solid rgba(181,87,63,.3); color:rgba(253,248,243,.85); }
+.mix-alert-missing { background:rgba(253,248,243,.04); border:1px solid rgba(253,248,243,.1); color:rgba(253,248,243,.75); }
+.mix-alert-under { background:rgba(201,164,74,.08); border:1px solid rgba(201,164,74,.2); color:rgba(253,248,243,.8); }
+.mix-ok-msg { font-size:.78rem; color:var(--green); padding:10px 14px; background:rgba(106,156,90,.1); border:1px solid rgba(106,156,90,.25); border-radius:11px; }
+
+/* ── CALENDÁRIO ── */
+.cal-wrap { padding:14px 34px 40px; }
+.cal-nav { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+.cal-nav h3 { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:600; }
+.cal-nav-btn { background:none; border:1px solid rgba(253,248,243,.15); color:rgba(253,248,243,.65); border-radius:8px; padding:5px 14px; font-size:.76rem; font-family:'Comfortaa',sans-serif; font-weight:600; cursor:pointer; transition:var(--trans); }
+.cal-nav-btn:hover { background:rgba(253,248,243,.07); color:var(--cream); }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; }
+.cal-dow { text-align:center; font-size:.59rem; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:rgba(253,248,243,.28); padding:4px 0 10px; }
+.cal-day { background:rgba(253,248,243,.03); border-radius:10px; min-height:86px; padding:7px 8px; border:1px solid rgba(253,248,243,.05); overflow:hidden; }
+.cal-day.today { border-color:rgba(212,132,154,.5); background:rgba(212,132,154,.06); }
+.cal-day.other-month { opacity:.28; pointer-events:none; }
+.cal-day-num { font-size:.68rem; font-weight:700; color:rgba(253,248,243,.42); margin-bottom:5px; }
+.cal-day.today .cal-day-num { color:var(--rose); }
+.cal-post-pill { display:block; font-size:.58rem; font-weight:600; padding:3px 6px; border-radius:5px; margin-bottom:3px; cursor:pointer; transition:filter .15s; color:#fff; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.cal-post-pill:hover { filter:brightness(1.2); }
+.cal-more { font-size:.57rem; color:rgba(253,248,243,.32); padding-top:1px; }
+
+/* ── LEGEND DO CALENDÁRIO ── */
+.cal-legend { display:flex; gap:16px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
+.cal-legend-item { display:flex; align-items:center; gap:6px; font-size:.65rem; color:rgba(253,248,243,.5); }
+.cal-legend-dot { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+.cal-legend-note { font-size:.6rem; color:rgba(253,248,243,.28); margin-left:auto; font-style:italic; }
+.cal-story-pill { border:1px dashed rgba(255,255,255,.4) !important; }
+
+/* ── RELATÓRIOS ── */
+.rel-wrap { padding:14px 34px 40px; }
+.rel-section { margin-bottom:28px; }
+.rel-section-title { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:600; color:var(--cream); margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid rgba(253,248,243,.1); }
+.rel-pilar-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+.rel-card { background:rgba(253,248,243,.04); border-radius:16px; padding:16px 18px; border:1px solid rgba(253,248,243,.07); }
+.rel-card-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.rel-pilar-name { font-size:.78rem; font-weight:700; }
+.rel-meta-badge { font-size:.6rem; background:rgba(253,248,243,.08); padding:3px 9px; border-radius:999px; color:rgba(253,248,243,.4); }
+.rel-stats { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-bottom:10px; text-align:center; }
+.rel-stat-n { font-size:1.1rem; font-weight:700; line-height:1; }
+.rel-stat-l { font-size:.54rem; color:rgba(253,248,243,.35); margin-top:3px; text-transform:uppercase; letter-spacing:.3px; }
+.rel-bar-track { height:5px; background:rgba(253,248,243,.09); border-radius:3px; overflow:hidden; margin-bottom:8px; }
+.rel-bar-fill { height:100%; border-radius:3px; transition:width .5s; }
+.rel-desc { font-size:.68rem; color:rgba(253,248,243,.4); line-height:1.55; }
+.rel-overview { display:flex; gap:18px; flex-wrap:wrap; background:rgba(253,248,243,.04); border-radius:16px; padding:18px 22px; border:1px solid rgba(253,248,243,.07); }
+.rel-ov-item { display:flex; flex-direction:column; gap:4px; }
+.rel-ov-n { font-size:1.35rem; font-weight:700; line-height:1; }
+.rel-ov-l { font-size:.6rem; color:rgba(253,248,243,.38); text-transform:uppercase; letter-spacing:.4px; }
+.rel-matrix-table { width:100%; border-collapse:collapse; margin-top:14px; }
+.rel-matrix-table th { font-size:.6rem; letter-spacing:.6px; text-transform:uppercase; color:rgba(253,248,243,.3); font-weight:700; padding:8px 12px; text-align:left; border-bottom:1px solid rgba(253,248,243,.08); }
+.rel-matrix-table td { font-size:.78rem; padding:10px 12px; border-bottom:1px solid rgba(253,248,243,.05); color:rgba(253,248,243,.72); vertical-align:top; }
+.rel-matrix-table tr:last-child td { border-bottom:none; }
+.rel-pilar-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:8px; vertical-align:middle; }
+
 @media (max-width:860px) {
   .shelf { width:0; overflow:hidden; }
   .main { margin-left:0; }
@@ -192,6 +276,8 @@ textarea { resize:vertical; min-height:64px; font-family:'Comfortaa',sans-serif;
         <div class="toolbar" id="filters"></div>
       </div>
 
+      <div id="mix-strip" class="mix-strip"></div>
+
       <div class="late-banner" id="late-banner">
         <div class="ic">⏳</div>
         <div class="txt">
@@ -200,9 +286,12 @@ textarea { resize:vertical; min-height:64px; font-family:'Comfortaa',sans-serif;
         </div>
       </div>
 
-      <div class="board-wrap">
+      <div class="board-wrap" id="board-wrap">
         <div class="board" id="board"></div>
       </div>
+
+      <div id="cal-wrap" style="display:none;"></div>
+      <div id="rel-wrap" class="rel-wrap" style="display:none;"></div>
     </div>
 
     <div id="soon-view" style="display:none;"></div>
@@ -252,11 +341,20 @@ const PILAR_COLOR = {
   'Geral':              '#c9a44a',
 };
 
+const PLANEJAMENTO = [
+  { pilar:'Educação Profunda', pct:40, meta:8, desc:'Constrói autoridade técnica; SEO de nicho; atrai decisores via busca e shares' },
+  { pilar:'Prova Social',      pct:25, meta:5, desc:'Reduz fricção de decisão; ativa prova social para quem já considera comprar' },
+  { pilar:'Bastidores',        pct:15, meta:3, desc:'Humaniza a marca; constrói afinidade e retenção de seguidores existentes' },
+  { pilar:'Venda Direta',      pct:20, meta:4, desc:'Converte demanda já educada; CTAs de assinatura/trial' },
+];
+
 const ICONS = {
   ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.2" cy="6.8" r="1"/></svg>',
   tk: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><path d="M14 4v9.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c0 2.5 2 4.4 4.5 4.5"/></svg>',
   fb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><path d="M15 4h-2.2A3.8 3.8 0 0 0 9 7.8V10H7v3h2v7h3v-7h2.3l.7-3H12V8a1 1 0 0 1 1-1h2z"/></svg>',
   wa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><circle cx="12" cy="12" r="9"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-2-2.6-1.2-.6 1A4.2 4.2 0 0 1 10 10.6l1-.6L9.8 7.4 9 9.5z"/></svg>',
+  cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/><rect x="7" y="14" width="2" height="2" rx=".5"/><rect x="11" y="14" width="2" height="2" rx=".5"/></svg>',
+  rep: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>',
 };
 
 /* ───────────────────────── ESTADO ───────────────────────── */
@@ -265,7 +363,11 @@ let STATE = {
   activeClient: CLIENTE_ID,
   activeNet: 'instagram',
   filter: 'all',
+  view: 'kanban',
+  calYear: new Date().getFullYear(),
+  calMonth: new Date().getMonth(),
   posts: [],
+  allPosts: [],
 };
 
 /* ───────────────────────── BOOT / DADOS ───────────────────────── */
@@ -284,6 +386,16 @@ async function fetchPosts() {
     .order('data', { ascending: true });
   if (error) { console.error(error); STATE.posts = []; return; }
   STATE.posts = data || [];
+}
+
+async function fetchAllPosts() {
+  if (!STATE.activeClient) { STATE.allPosts = []; return; }
+  const { data, error } = await sb.from('posts')
+    .select('*')
+    .eq('cliente_id', STATE.activeClient)
+    .order('data', { ascending: true });
+  if (error) { console.error(error); STATE.allPosts = []; return; }
+  STATE.allPosts = data || [];
 }
 
 /* ───────────────────────── HELPERS ───────────────────────── */
@@ -326,18 +438,37 @@ function renderClientFixed() {
 function renderNetNav() {
   const nav = document.getElementById('net-nav');
   nav.innerHTML = NETWORKS.map(n => `
-    <button class="net-btn ${n.key===STATE.activeNet?'active':''}" data-net="${n.key}">
+    <button class="net-btn ${n.key===STATE.activeNet && STATE.view==='kanban'?'active':''}" data-net="${n.key}">
       ${ICONS[n.icon]}
       <span>${n.label}</span>
       ${!n.ready ? '<span class="net-soon">em breve</span>' : ''}
     </button>
-  `).join('');
-  nav.querySelectorAll('.net-btn').forEach(btn => {
+  `).join('') + `
+    <div class="shelf-divider" style="margin:10px 4px 6px"></div>
+    <button class="net-btn ${STATE.view==='calendar'?'active':''}" id="cal-nav-btn">
+      ${ICONS['cal']}
+      <span>Calendário</span>
+    </button>
+    <button class="net-btn ${STATE.view==='reports'?'active':''}" id="rep-nav-btn">
+      ${ICONS['rep']}
+      <span>Relatórios</span>
+    </button>
+  `;
+  nav.querySelectorAll('.net-btn[data-net]').forEach(btn => {
     btn.addEventListener('click', async () => {
       STATE.activeNet = btn.dataset.net;
+      STATE.view = 'kanban';
       STATE.filter = 'all';
       await renderAll();
     });
+  });
+  nav.querySelector('#cal-nav-btn').addEventListener('click', async () => {
+    STATE.view = 'calendar';
+    await renderAll();
+  });
+  nav.querySelector('#rep-nav-btn').addEventListener('click', async () => {
+    STATE.view = 'reports';
+    await renderAll();
   });
 }
 
@@ -347,14 +478,51 @@ async function renderAll() {
   renderClientFixed();
   renderNetNav();
 
-  const net = NETWORKS.find(n => n.key === STATE.activeNet);
   const boardView = document.getElementById('board-view');
   const soonView = document.getElementById('soon-view');
 
+  if (STATE.view === 'calendar') {
+    soonView.style.display = 'none';
+    boardView.querySelector('.topbar').style.display = 'flex';
+    document.getElementById('page-title').textContent = 'Calendário';
+    document.getElementById('page-sub').textContent = clienteNome(STATE.activeClient);
+    document.getElementById('late-banner').classList.remove('show');
+    document.getElementById('late-banner').style.display = 'none';
+    document.getElementById('mix-strip').innerHTML = '';
+    renderFilters();
+    await fetchAllPosts();
+    document.getElementById('board-wrap').style.display = 'none';
+    document.getElementById('cal-wrap').style.display = 'block';
+    document.getElementById('rel-wrap').style.display = 'none';
+    renderCalendarView();
+    return;
+  }
+
+  if (STATE.view === 'reports') {
+    soonView.style.display = 'none';
+    boardView.querySelector('.topbar').style.display = 'flex';
+    document.getElementById('page-title').textContent = 'Relatórios';
+    document.getElementById('page-sub').textContent = clienteNome(STATE.activeClient);
+    document.getElementById('late-banner').classList.remove('show');
+    document.getElementById('late-banner').style.display = 'none';
+    document.getElementById('mix-strip').innerHTML = '';
+    document.getElementById('filters').innerHTML = '';
+    await fetchAllPosts();
+    document.getElementById('board-wrap').style.display = 'none';
+    document.getElementById('cal-wrap').style.display = 'none';
+    document.getElementById('rel-wrap').style.display = 'block';
+    renderReportsView();
+    return;
+  }
+
+  const net = NETWORKS.find(n => n.key === STATE.activeNet);
   if (!net.ready) {
     boardView.querySelector('.topbar').style.display = 'none';
-    boardView.querySelector('.late-banner') && (document.getElementById('late-banner').classList.remove('show'));
+    document.getElementById('late-banner').classList.remove('show');
     document.getElementById('board').innerHTML = '';
+    document.getElementById('mix-strip').innerHTML = '';
+    document.getElementById('cal-wrap').style.display = 'none';
+    document.getElementById('rel-wrap').style.display = 'none';
     soonView.style.display = 'flex';
     soonView.innerHTML = `
       <div class="soon-wrap">
@@ -366,21 +534,29 @@ async function renderAll() {
   }
   soonView.style.display = 'none';
   boardView.querySelector('.topbar').style.display = 'flex';
+  document.getElementById('late-banner').style.display = '';
+  document.getElementById('cal-wrap').style.display = 'none';
+  document.getElementById('rel-wrap').style.display = 'none';
 
   document.getElementById('page-title').textContent = net.label;
   document.getElementById('page-sub').textContent = clienteNome(STATE.activeClient);
 
   await fetchPosts();
+  renderMixStrip();
   renderFilters();
+  document.getElementById('board-wrap').style.display = 'block';
   renderBoard();
 }
 
 function renderFilters() {
   const pilares = ['all', ...new Set(STATE.posts.map(p => p.pilar))];
   const wrap = document.getElementById('filters');
-  wrap.innerHTML = pilares.map(p => `
+
+  const filterChips = STATE.view === 'kanban' ? pilares.map(p => `
     <button class="chip-filter ${STATE.filter===p?'active':''}" data-pilar="${p}">${p==='all'?'Todos':p}</button>
-  `).join('') + `<button class="btn btn-prim" id="add-post-btn">+ Novo post</button>`;
+  `).join('') : '';
+
+  wrap.innerHTML = filterChips + `<button class="btn btn-prim" id="add-post-btn">+ Novo post</button>`;
 
   wrap.querySelectorAll('.chip-filter').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -447,9 +623,10 @@ function renderBoard() {
 /* ───────────────────────── BRIEFING PARA COPIAR ───────────────────────── */
 
 function montarBriefingTexto(p) {
+  const _redeId = p.rede_id || STATE.activeNet;
   const linhas = [
     `CLIENTE: ${clienteNome(STATE.activeClient)}`,
-    `REDE: ${NETWORKS.find(n=>n.key===STATE.activeNet)?.label || STATE.activeNet}`,
+    `REDE: ${NETWORKS.find(n=>n.key===_redeId)?.label || _redeId}`,
     `DATA: ${fmtDateBR(p.data)} (${p.dia_semana || ''}) às ${fmtTime(p.horario)}`,
     `FORMATO: ${p.formato}`,
     `PILAR: ${p.pilar}`,
@@ -470,7 +647,7 @@ function montarBriefingTexto(p) {
 }
 
 async function copiarBriefing(postId, btn) {
-  const post = STATE.posts.find(p => p.id === postId);
+  const post = STATE.allPosts.find(p => p.id === postId) || STATE.posts.find(p => p.id === postId);
   const texto = montarBriefingTexto(post);
   try {
     await navigator.clipboard.writeText(texto);
@@ -488,9 +665,11 @@ function openModal(postId) {
   const isNew = !postId;
   const post = isNew
     ? { id:null, data:new Date().toISOString().slice(0,10), dia_semana:'', horario:'19:00', formato:'Carrossel', tema:'', objetivo:'', cta:'', hashtags:'', legenda:'', briefing_visual:'', story_apoio:'', pilar:'Educação Profunda', status:'planejar', agendado:false }
-    : STATE.posts.find(p => p.id === postId);
+    : (STATE.allPosts.find(p => p.id === postId) || STATE.posts.find(p => p.id === postId));
 
   const late = !isNew && isLate(post);
+  const _redeId = isNew ? STATE.activeNet : (post.rede_id || STATE.activeNet);
+  const _redeLabel = NETWORKS.find(n=>n.key===_redeId)?.label || _redeId;
 
   const overlay = document.createElement('div');
   overlay.className = 'overlay';
@@ -500,7 +679,7 @@ function openModal(postId) {
         <h2>${isNew ? 'Novo post' : post.tema}</h2>
         <button class="close-x" id="m-close-x">✕</button>
       </div>
-      <div class="modal-sub">${clienteNome(STATE.activeClient)} · ${NETWORKS.find(n=>n.key===STATE.activeNet).label}${!isNew ? ' · ' + post.formato : ''}</div>
+      <div class="modal-sub">${clienteNome(STATE.activeClient)} · ${_redeLabel}${!isNew ? ' · ' + post.formato : ''}</div>
 
       ${late ? `<div class="modal-alert">⏳ Este post está ${lateLabel(post)}. Atualize a data ou marque como publicado.</div>` : ''}
 
@@ -587,7 +766,7 @@ function openModal(postId) {
 
     const payload = {
       cliente_id: STATE.activeClient,
-      rede_id: STATE.activeNet,
+      rede_id: isNew ? STATE.activeNet : (post.rede_id || STATE.activeNet),
       tema: overlay.querySelector('#m-tema').value.trim() || 'Sem título',
       data,
       dia_semana,
@@ -614,6 +793,255 @@ function openModal(postId) {
     overlay.remove();
     await renderAll();
   });
+}
+
+/* ───────────────────────── MIX STRIP ───────────────────────── */
+
+function gerarAdvisory(monthPosts) {
+  const total = monthPosts.length;
+  const metaTotal = PLANEJAMENTO.reduce((s, p) => s + p.meta, 0);
+  const alerts = [];
+
+  PLANEJAMENTO.forEach(pl => {
+    const count = monthPosts.filter(p => p.pilar === pl.pilar).length;
+    if (count > pl.meta) {
+      alerts.push({ tipo: 'over', msg: `Você programou ${count} posts de <strong>${pl.pilar}</strong>, mas o ideal são ${pl.meta} (${pl.pct}% do mix). Considere trocar ${count - pl.meta} por outro pilar.` });
+    } else if (count === 0) {
+      alerts.push({ tipo: 'missing', msg: `Nenhum post de <strong>${pl.pilar}</strong> ainda — você precisa de ${pl.meta} para manter os ${pl.pct}% do mix.` });
+    } else if (count < pl.meta) {
+      alerts.push({ tipo: 'under', msg: `Faltam ${pl.meta - count} posts de <strong>${pl.pilar}</strong> para atingir os ${pl.pct}% planejados.` });
+    }
+  });
+
+  if (alerts.length === 0) return `<div class="mix-ok-msg">✓ Mix perfeito! Os ${total} posts do mês estão alinhados com o planejamento de ${metaTotal} posts.</div>`;
+
+  return alerts.map(a => `<div class="mix-alert mix-alert-${a.tipo}">${a.tipo === 'over' ? '⚠️' : a.tipo === 'missing' ? '❌' : '↗️'} ${a.msg}</div>`).join('');
+}
+
+function renderMixStrip() {
+  const strip = document.getElementById('mix-strip');
+  if (!strip) return;
+  const year = STATE.calYear;
+  const month = STATE.calMonth;
+  const monthStr = new Date(year, month, 1).toLocaleDateString('pt-BR', { month:'long', year:'numeric' });
+
+  const monthPosts = STATE.posts.filter(p => {
+    const d = new Date(p.data + 'T00:00:00');
+    return d.getFullYear() === year && d.getMonth() === month;
+  });
+
+  const cardsHTML = PLANEJAMENTO.map(pl => {
+    const color = PILAR_COLOR[pl.pilar] || '#c9a44a';
+    const planned = monthPosts.filter(p => p.pilar === pl.pilar).length;
+    const published = monthPosts.filter(p => p.pilar === pl.pilar && p.status === 'publicado').length;
+    const barPct = Math.min(100, Math.round((planned / pl.meta) * 100));
+    let statusClass = 'under', statusText = 'nenhum ainda';
+    if (planned > pl.meta) { statusClass = 'over'; statusText = `${planned - pl.meta} a mais`; }
+    else if (planned >= pl.meta) { statusClass = 'ok'; statusText = '✓ na meta'; }
+    else if (planned > 0) { statusClass = 'warn'; statusText = `faltam ${pl.meta - planned}`; }
+    return `<div class="mix-card">
+      <div class="mix-card-top">
+        <span class="mix-pilar-name" style="color:${color}">${pl.pilar}</span>
+        <span class="mix-pct-badge">${pl.pct}%</span>
+      </div>
+      <div class="mix-nums">
+        <div class="mix-num"><div class="n">${planned}<sub>/${pl.meta}</sub></div><div class="l">planejados</div></div>
+        <div class="mix-num"><div class="n">${published}</div><div class="l">publicados</div></div>
+      </div>
+      <div class="mix-bar-track"><div class="mix-bar-fill" style="width:${barPct}%;background:${color}"></div></div>
+      <div class="mix-status ${statusClass}">${statusText}</div>
+    </div>`;
+  }).join('');
+
+  strip.innerHTML = `
+    <div class="mix-header">
+      <span class="mix-title">Planejamento do mês</span>
+      <button class="mix-nav-btn" onclick="changeMonth(-1)">‹</button>
+      <span class="mix-month-label">${monthStr.charAt(0).toUpperCase() + monthStr.slice(1)}</span>
+      <button class="mix-nav-btn" onclick="changeMonth(1)">›</button>
+    </div>
+    <div class="mix-cards">${cardsHTML}</div>
+    <div class="mix-advisory">${gerarAdvisory(monthPosts)}</div>
+  `;
+}
+
+/* ───────────────────────── CALENDÁRIO ───────────────────────── */
+
+function renderCalendarView() {
+  const wrap = document.getElementById('cal-wrap');
+  if (!wrap) return;
+  const year = STATE.calYear;
+  const month = STATE.calMonth;
+  const monthStr = new Date(year, month, 1).toLocaleDateString('pt-BR', { month:'long', year:'numeric' });
+  const today = new Date();
+  const firstDow = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrev = new Date(year, month, 0).getDate();
+  const dowLabels = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+  // Apenas posts prontos para agendar e publicados, todos os canais
+  const calPosts = STATE.allPosts.filter(p => p.status === 'pronto' || p.status === 'publicado');
+
+  const itemsByDate = {};
+  calPosts.forEach(p => {
+    if (!itemsByDate[p.data]) itemsByDate[p.data] = [];
+    itemsByDate[p.data].push({ type:'post', post:p });
+    if (p.story_apoio && p.story_apoio.trim()) {
+      itemsByDate[p.data].push({ type:'story', post:p });
+    }
+  });
+
+  let dayEls = [];
+  for (let i = firstDow - 1; i >= 0; i--) {
+    dayEls.push(`<div class="cal-day other-month"><div class="cal-day-num">${daysInPrev - i}</div></div>`);
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+    const dayItems = itemsByDate[dateStr] || [];
+    const maxShow = 3;
+    const pills = dayItems.slice(0, maxShow).map(item => {
+      const color = PILAR_COLOR[item.post.pilar] || '#c9a44a';
+      if (item.type === 'story') {
+        return `<div class="cal-post-pill cal-story-pill" style="background:${color}44;" data-pid="${item.post.id}">📱 story</div>`;
+      }
+      const pub = item.post.status === 'publicado';
+      return `<div class="cal-post-pill" style="background:${color}${pub?'88':'cc'};" data-pid="${item.post.id}">${pub ? '✓ ' : ''}${item.post.tema}</div>`;
+    }).join('');
+    const more = dayItems.length > maxShow ? `<div class="cal-more">+${dayItems.length - maxShow} mais</div>` : '';
+    dayEls.push(`<div class="cal-day${isToday?' today':''}"><div class="cal-day-num">${d}</div>${pills}${more}</div>`);
+  }
+  const remaining = dayEls.length % 7 === 0 ? 0 : 7 - (dayEls.length % 7);
+  for (let d = 1; d <= remaining; d++) {
+    dayEls.push(`<div class="cal-day other-month"><div class="cal-day-num">${d}</div></div>`);
+  }
+
+  wrap.innerHTML = `
+    <div class="cal-wrap" style="padding:14px 34px 40px;">
+      <div class="cal-nav">
+        <button class="cal-nav-btn" onclick="changeMonth(-1)">‹ anterior</button>
+        <h3>${monthStr.charAt(0).toUpperCase() + monthStr.slice(1)}</h3>
+        <button class="cal-nav-btn" onclick="changeMonth(1)">próximo ›</button>
+      </div>
+      <div class="cal-legend">
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(155,127,209,.8)"></div>Post pronto p/ agendar</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(155,127,209,.3);border:1px dashed rgba(255,255,255,.4)"></div>Story de apoio</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:rgba(106,156,90,.65)"></div>Publicado</div>
+        <span class="cal-legend-note">Todos os canais · Pronto p/ agendar e Publicados</span>
+      </div>
+      <div class="cal-grid">
+        ${dowLabels.map(d => `<div class="cal-dow">${d}</div>`).join('')}
+        ${dayEls.join('')}
+      </div>
+    </div>
+  `;
+
+  wrap.querySelectorAll('.cal-post-pill[data-pid]').forEach(pill => {
+    const post = STATE.allPosts.find(p => String(p.id) === pill.dataset.pid);
+    if (post) pill.addEventListener('click', () => openModal(post.id));
+  });
+}
+
+function changeMonth(delta) {
+  let m = STATE.calMonth + delta;
+  let y = STATE.calYear;
+  if (m < 0) { m = 11; y--; }
+  if (m > 11) { m = 0; y++; }
+  STATE.calMonth = m;
+  STATE.calYear = y;
+  if (STATE.view === 'kanban') renderMixStrip();
+  if (STATE.view === 'calendar') renderCalendarView();
+}
+
+
+/* ───────────────────────── RELATÓRIOS ───────────────────────── */
+
+function renderReportsView() {
+  const wrap = document.getElementById('rel-wrap');
+  if (!wrap) return;
+
+  const all = STATE.allPosts;
+  const total       = all.length;
+  const totPlanejar  = all.filter(p => p.status === 'planejar').length;
+  const totDesign    = all.filter(p => p.status === 'design').length;
+  const totPronto    = all.filter(p => p.status === 'pronto').length;
+  const totAgendado  = all.filter(p => p.agendado).length;
+  const totPublicado = all.filter(p => p.status === 'publicado').length;
+
+  const pilarStats = {};
+  PLANEJAMENTO.forEach(pl => {
+    pilarStats[pl.pilar] = { planejar:0, design:0, pronto:0, agendado:0, publicado:0 };
+  });
+  all.forEach(p => {
+    const k = p.pilar;
+    if (!pilarStats[k]) pilarStats[k] = { planejar:0, design:0, pronto:0, agendado:0, publicado:0 };
+    if (p.status === 'planejar')  pilarStats[k].planejar++;
+    if (p.status === 'design')    pilarStats[k].design++;
+    if (p.status === 'pronto')    pilarStats[k].pronto++;
+    if (p.agendado)               pilarStats[k].agendado++;
+    if (p.status === 'publicado') pilarStats[k].publicado++;
+  });
+
+  const cardsHTML = PLANEJAMENTO.map(pl => {
+    const color = PILAR_COLOR[pl.pilar] || '#c9a44a';
+    const s = pilarStats[pl.pilar] || { planejar:0, design:0, pronto:0, agendado:0, publicado:0 };
+    const filled = s.planejar + s.design + s.pronto + s.publicado;
+    const barPct = Math.min(100, Math.round((filled / pl.meta) * 100));
+    return `<div class="rel-card">
+      <div class="rel-card-head">
+        <span class="rel-pilar-name" style="color:${color}">${pl.pilar}</span>
+        <span class="rel-meta-badge">${pl.pct}% do mix · meta ${pl.meta}</span>
+      </div>
+      <div class="rel-stats">
+        <div><div class="rel-stat-n">${s.planejar}</div><div class="rel-stat-l">A planejar</div></div>
+        <div><div class="rel-stat-n">${s.design}</div><div class="rel-stat-l">Produção</div></div>
+        <div><div class="rel-stat-n">${s.pronto}</div><div class="rel-stat-l">Pronto</div></div>
+        <div><div class="rel-stat-n" style="color:${color}">${s.agendado}</div><div class="rel-stat-l">Agendado</div></div>
+        <div><div class="rel-stat-n" style="color:var(--green)">${s.publicado}</div><div class="rel-stat-l">Publicado</div></div>
+      </div>
+      <div class="rel-bar-track"><div class="rel-bar-fill" style="width:${barPct}%;background:${color}"></div></div>
+      <div class="rel-desc">${pl.desc}</div>
+    </div>`;
+  }).join('');
+
+  const matrixRowsHTML = PLANEJAMENTO.map(pl => {
+    const color = PILAR_COLOR[pl.pilar] || '#c9a44a';
+    return `<tr>
+      <td><span class="rel-pilar-dot" style="background:${color}"></span>${pl.pilar}</td>
+      <td style="font-weight:700">${pl.pct}%</td>
+      <td>${pl.meta}</td>
+      <td style="font-size:.72rem;color:rgba(253,248,243,.55)">${pl.desc}</td>
+    </tr>`;
+  }).join('');
+
+  wrap.innerHTML = `
+    <div class="rel-section">
+      <div class="rel-section-title">Visão geral — todos os canais</div>
+      <div class="rel-overview">
+        <div class="rel-ov-item"><div class="rel-ov-n">${total}</div><div class="rel-ov-l">Total</div></div>
+        <div class="rel-ov-item"><div class="rel-ov-n" style="color:rgba(253,248,243,.5)">${totPlanejar}</div><div class="rel-ov-l">A planejar</div></div>
+        <div class="rel-ov-item"><div class="rel-ov-n" style="color:var(--gold)">${totDesign}</div><div class="rel-ov-l">Em produção</div></div>
+        <div class="rel-ov-item"><div class="rel-ov-n" style="color:#9b7fd1">${totPronto}</div><div class="rel-ov-l">Pronto p/ agendar</div></div>
+        <div class="rel-ov-item"><div class="rel-ov-n" style="color:var(--rose)">${totAgendado}</div><div class="rel-ov-l">Agendados</div></div>
+        <div class="rel-ov-item"><div class="rel-ov-n" style="color:var(--green)">${totPublicado}</div><div class="rel-ov-l">Publicados</div></div>
+      </div>
+    </div>
+
+    <div class="rel-section">
+      <div class="rel-section-title">Desempenho por pilar</div>
+      <div class="rel-pilar-grid">${cardsHTML}</div>
+    </div>
+
+    <div class="rel-section">
+      <div class="rel-section-title">Matriz de pilares de conteúdo</div>
+      <table class="rel-matrix-table">
+        <thead><tr>
+          <th>Pilar</th><th>% do mix</th><th>Meta mensal</th><th>Objetivo estratégico</th>
+        </tr></thead>
+        <tbody>${matrixRowsHTML}</tbody>
+      </table>
+    </div>
+  `;
 }
 
 /* ───────────────────────── INIT ───────────────────────── */
