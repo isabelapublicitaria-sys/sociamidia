@@ -228,6 +228,14 @@ textarea { resize:vertical; min-height:64px; font-family:'Comfortaa',sans-serif;
 .rel-matrix-table td { font-size:.78rem; padding:10px 12px; border-bottom:1px solid rgba(253,248,243,.05); color:rgba(253,248,243,.72); vertical-align:top; }
 .rel-matrix-table tr:last-child td { border-bottom:none; }
 .rel-pilar-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:8px; vertical-align:middle; }
+.rhythm-row { display:flex; gap:10px; }
+.rhythm-day { flex:1; background:rgba(253,248,243,.04); border-radius:14px; padding:14px 14px 12px; border:1px solid rgba(253,248,243,.07); display:flex; flex-direction:column; gap:6px; min-width:0; }
+.rhythm-day.optional { border-style:dashed; opacity:.72; }
+.rhythm-dow { font-size:.58rem; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color:rgba(253,248,243,.32); }
+.rhythm-pilar-tag { display:inline-block; font-size:.65rem; font-weight:700; padding:3px 9px; border-radius:999px; color:#fff; line-height:1.4; }
+.rhythm-role { font-size:.68rem; color:rgba(253,248,243,.55); line-height:1.5; }
+.rhythm-logic { font-size:.6rem; color:rgba(253,248,243,.28); line-height:1.45; font-style:italic; border-top:1px solid rgba(253,248,243,.06); padding-top:6px; margin-top:2px; }
+.rhythm-mantra { font-size:.72rem; color:rgba(253,248,243,.4); line-height:1.6; padding:12px 16px; background:rgba(253,248,243,.03); border-radius:10px; border:1px solid rgba(253,248,243,.06); margin-top:4px; text-align:center; font-style:italic; }
 
 @media (max-width:860px) {
   .shelf { width:0; overflow:hidden; }
@@ -1028,6 +1036,43 @@ function renderReportsView() {
         </tr></thead>
         <tbody>${matrixRowsHTML}</tbody>
       </table>
+    </div>
+
+    <div class="rel-section">
+      <div class="rel-section-title">Ritmo estratégico semanal</div>
+      <div class="rhythm-row">
+        <div class="rhythm-day">
+          <div class="rhythm-dow">Segunda</div>
+          <span class="rhythm-pilar-tag" style="background:#9b7fd1">Educação Profunda</span>
+          <div class="rhythm-role">Abre a semana ensinando algo relevante</div>
+          <div class="rhythm-logic">Atrai audiência fria, gera salvamentos e compartilhamentos — o combustível do alcance orgânico.</div>
+        </div>
+        <div class="rhythm-day">
+          <div class="rhythm-dow">Terça</div>
+          <span class="rhythm-pilar-tag" style="background:#9b7fd1">Educação Profunda</span>
+          <div class="rhythm-role">Aprofunda ou complementa o tema de segunda</div>
+          <div class="rhythm-logic">Quem salvou ontem volta pra ver mais. Você dobra a autoridade antes de qualquer CTA.</div>
+        </div>
+        <div class="rhythm-day optional">
+          <div class="rhythm-dow">Quarta <span style="font-size:.55rem;opacity:.6">(quando existe)</span></div>
+          <span class="rhythm-pilar-tag" style="background:#d18b5a">Bastidores</span>
+          <div class="rhythm-role">Pilar de transição — humaniza a marca</div>
+          <div class="rhythm-logic">Quebra o ritmo técnico, cria afinidade. Mantém quem já segue engajado sem forçar venda.</div>
+        </div>
+        <div class="rhythm-day">
+          <div class="rhythm-dow">Quinta</div>
+          <span class="rhythm-pilar-tag" style="background:#5aa68f">Prova Social</span>
+          <div class="rhythm-role">Mostra resultado de quem já aplicou o conhecimento</div>
+          <div class="rhythm-logic">A audiência foi educada nos dias anteriores. Agora vê prova de que funciona — fricção cai.</div>
+        </div>
+        <div class="rhythm-day">
+          <div class="rhythm-dow">Sexta</div>
+          <span class="rhythm-pilar-tag" style="background:#d4849a">Venda Direta</span>
+          <div class="rhythm-role">Fecha a semana convertendo quem foi aquecido</div>
+          <div class="rhythm-logic">O CTA chega depois de educar, provar e humanizar — a audiência já está convencida.</div>
+        </div>
+      </div>
+      <div class="rhythm-mantra">Educação atrai · Prova converte · Bastidores retém</div>
     </div>
   `;
 }
