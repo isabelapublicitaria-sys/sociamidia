@@ -120,6 +120,8 @@ body {
 .ficha:hover .ficha-actions { opacity:1; }
 .ficha-act-btn { background:rgba(255,255,255,.92); border:none; border-radius:7px; padding:4px 7px; font-size:.8rem; cursor:pointer; line-height:1; box-shadow:0 1px 5px rgba(0,0,0,.14); transition:var(--trans); }
 .ficha-act-btn:hover { background:#fff; transform:scale(1.1); }
+.ficha-status-sel { background:rgba(255,255,255,.92); border:none; border-radius:7px; padding:3px 5px; font-size:.66rem; cursor:pointer; box-shadow:0 1px 5px rgba(0,0,0,.14); color:#2b1620; max-width:120px; }
+.ficha-status-sel:hover { background:#fff; }
 .sched-dot { display:flex; align-items:center; gap:5px; font-size:.64rem; font-weight:700; }
 .sched-dot.on { color:var(--green); }
 .sched-dot.off { color:var(--ink-faint); }
@@ -901,13 +903,14 @@ function renderBoard() {
       card.style.setProperty('--marker', color);
       const arqParsed = parseJSON(p.arquivos, []);
       const firstImg = arqParsed.find(a => isImageUrl(a.url));
-      const nextIdx = STATUSES.findIndex(s => s.key === normStatus(p.status)) + 1;
-      const nextStg = STATUSES[nextIdx];
+      const curStatus = normStatus(p.status);
       card.innerHTML = `
         <div class="ficha-actions">
           ${p.legenda ? `<button class="ficha-act-btn" data-action="copy-leg" title="Copiar legenda">📋</button>` : ''}
-          ${nextStg ? `<button class="ficha-act-btn" data-action="advance" data-next="${nextStg.key}" title="→ ${nextStg.label}" style="color:${nextStg.color}">→</button>` : ''}
-          ${normStatus(p.status)==='agendar' && !p.agendado ? `<button class="ficha-act-btn" data-action="agendar" title="Marcar agendado">📅</button>` : ''}
+          <select class="ficha-status-sel" title="Mover para etapa">
+            ${STATUSES.map(s => `<option value="${s.key}" ${s.key===curStatus?'selected':''}>${s.label}</option>`).join('')}
+          </select>
+          ${curStatus==='agendar' && !p.agendado ? `<button class="ficha-act-btn" data-action="agendar" title="Marcar agendado">📅</button>` : ''}
         </div>
         ${firstImg ? `<img class="ficha-img" src="${firstImg.url}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}
         ${late ? `<div class="ficha-late-flag">⏳ ${lateLabel(p)}</div>` : ''}
@@ -933,15 +936,24 @@ function renderBoard() {
               btn.textContent = '✓';
               setTimeout(() => { btn.textContent = '📋'; }, 1500);
             } catch { alert(p.legenda); }
-          } else if (action === 'advance') {
-            const { error } = await sb.from('posts').update({ status: btn.dataset.next }).eq('id', p.id);
-            if (!error) await renderAll();
           } else if (action === 'agendar') {
             const { error } = await sb.from('posts').update({ agendado: true }).eq('id', p.id);
             if (!error) await renderAll();
           }
         });
       });
+      const stSel = card.querySelector('.ficha-status-sel');
+      if (stSel) {
+        stSel.addEventListener('click', e => e.stopPropagation());
+        stSel.addEventListener('change', async (e) => {
+          e.stopPropagation();
+          const newStatus = stSel.value;
+          if (newStatus !== curStatus) {
+            const { error } = await sb.from('posts').update({ status: newStatus }).eq('id', p.id);
+            if (!error) await renderAll();
+          }
+        });
+      }
       card.addEventListener('click', () => openModal(p.id));
       col.appendChild(card);
     });
@@ -1306,16 +1318,32 @@ function openModal(postId) {
       await renderAll();
     });
 
-    const curIdx = STATUSES.findIndex(s => s.key === normStatus(post.status));
-    const nextStage = STATUSES[curIdx + 1];
     const advRow = overlay.querySelector('#m-advance-row');
-    if (nextStage && advRow) {
-      advRow.innerHTML = `<button class="btn" id="m-advance" style="flex:1;justify-content:center;border-color:${nextStage.color};color:${nextStage.color}">→ Avançar para: ${nextStage.label}</button>`;
-      advRow.querySelector('#m-advance').addEventListener('click', async () => {
-        const { error } = await sb.from('posts').update({ status: nextStage.key }).eq('id', post.id);
+    if (advRow) {
+      const curStatusModal = normStatus(post.status);
+      advRow.innerHTML = `
+        <select id="m-advance-sel" style="flex:1;padding:8px 10px;border-radius:8px;border:1px solid rgba(43,29,26,.15);background:var(--cream);font-size:.82rem;color:var(--ink)">
+          ${STATUSES.map(s => `<option value="${s.key}" ${s.key===curStatusModal?'selected':''}>${s.label}</option>`).join('')}
+        </select>
+        <button class="btn" id="m-advance" style="white-space:nowrap">Mover para etapa</button>
+      `;
+      const advSel = advRow.querySelector('#m-advance-sel');
+      const advBtn = advRow.querySelector('#m-advance');
+      function syncAdvBtn() {
+        const stage = STATUSES.find(s => s.key === advSel.value);
+        advBtn.disabled = advSel.value === curStatusModal;
+        if (stage) { advBtn.style.borderColor = stage.color; advBtn.style.color = stage.color; }
+      }
+      advSel.addEventListener('change', syncAdvBtn);
+      syncAdvBtn();
+      advBtn.addEventListener('click', async () => {
+        const newStatus = advSel.value;
+        if (newStatus === curStatusModal) return;
+        const { error } = await sb.from('posts').update({ status: newStatus }).eq('id', post.id);
         if (error) { showToast('Erro: ' + error.message, 'error'); return; }
         overlay.remove();
-        showToast(`Avançado para: ${nextStage.label}`, 'success');
+        const stage = STATUSES.find(s => s.key === newStatus);
+        showToast(`Movido para: ${stage ? stage.label : newStatus}`, 'success');
         await renderAll();
       });
     }
