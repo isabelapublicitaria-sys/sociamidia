@@ -95,7 +95,7 @@ body {
 .late-banner .txt span { display:block; font-size:.72rem; color:rgba(253,248,243,.6); margin-top:2px; }
 
 .board-wrap { flex:1; padding:14px 34px 40px; overflow-x:auto; }
-.board { display:grid; grid-template-columns:repeat(4, minmax(240px,1fr)); gap:16px; min-width:920px; }
+.board { display:grid; grid-template-columns:repeat(8, minmax(195px,1fr)); gap:10px; min-width:1600px; }
 .col { background:rgba(253,248,243,.03); border-radius:20px; padding:14px; display:flex; flex-direction:column; gap:10px; min-height:240px; }
 .col-head { display:flex; align-items:center; justify-content:space-between; padding:4px 8px 8px; font-size:.72rem; font-weight:700; letter-spacing:.4px; text-transform:uppercase; color:rgba(253,248,243,.45); }
 .col-head .n { background:rgba(253,248,243,.08); padding:2px 9px; border-radius:999px; color:var(--cream); }
@@ -111,6 +111,15 @@ body {
 .ficha-meta { display:flex; gap:10px; flex-wrap:wrap; margin-top:9px; font-size:.66rem; color:var(--ink-soft); }
 .ficha-meta b { color:var(--ink); }
 .ficha-foot { display:flex; align-items:center; justify-content:space-between; margin-top:10px; padding-top:9px; border-top:1px dashed rgba(43,29,26,.15); }
+.ficha-cl { margin-top:8px; display:flex; align-items:center; gap:8px; }
+.ficha-cl-track { flex:1; height:3px; background:rgba(43,29,26,.1); border-radius:2px; overflow:hidden; }
+.ficha-cl-fill { height:100%; border-radius:2px; transition:width .4s; }
+.ficha-cl-label { font-size:.58rem; font-weight:700; flex-shrink:0; }
+.ficha-img { width:100%; height:68px; object-fit:cover; border-radius:8px; margin-bottom:8px; display:block; }
+.ficha-actions { position:absolute; top:8px; right:8px; display:flex; gap:3px; opacity:0; transition:opacity .15s; z-index:2; }
+.ficha:hover .ficha-actions { opacity:1; }
+.ficha-act-btn { background:rgba(255,255,255,.92); border:none; border-radius:7px; padding:4px 7px; font-size:.8rem; cursor:pointer; line-height:1; box-shadow:0 1px 5px rgba(0,0,0,.14); transition:var(--trans); }
+.ficha-act-btn:hover { background:#fff; transform:scale(1.1); }
 .sched-dot { display:flex; align-items:center; gap:5px; font-size:.64rem; font-weight:700; }
 .sched-dot.on { color:var(--green); }
 .sched-dot.off { color:var(--ink-faint); }
@@ -120,7 +129,42 @@ body {
 .loading-col { text-align:center; padding:30px 10px; color:rgba(253,248,243,.3); font-size:.76rem; }
 
 .overlay { position:fixed; inset:0; background:rgba(15,9,8,.6); z-index:100; display:flex; align-items:center; justify-content:center; padding:24px; }
-.modal { background:var(--cream); border-radius:22px; width:min(560px,100%); max-height:88vh; overflow-y:auto; padding:30px 32px; box-shadow:0 30px 80px rgba(0,0,0,.4); color:var(--ink); }
+.modal { background:var(--cream); border-radius:22px; width:min(720px,100%); max-height:90vh; overflow-y:auto; padding:28px 32px; box-shadow:0 30px 80px rgba(0,0,0,.4); color:var(--ink); }
+.modal-tabs { display:flex; border-bottom:1px solid rgba(43,29,26,.12); margin:12px -32px 20px; padding:0 32px; overflow-x:auto; gap:0; }
+.tab-btn { font-family:'Comfortaa',sans-serif; font-size:.7rem; font-weight:700; padding:10px 14px; border:none; background:none; cursor:pointer; color:rgba(43,29,26,.38); border-bottom:2px solid transparent; margin-bottom:-1px; transition:.15s; white-space:nowrap; flex-shrink:0; }
+.tab-btn:hover { color:rgba(43,29,26,.65); }
+.tab-btn.active { color:var(--rose); border-bottom-color:var(--rose); }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+.cl-progress-label { font-size:.62rem; color:var(--ink-faint); margin-bottom:6px; display:flex; justify-content:space-between; }
+.cl-progress { height:5px; background:rgba(43,29,26,.1); border-radius:3px; overflow:hidden; margin-bottom:16px; }
+.cl-progress-fill { height:100%; background:var(--green); border-radius:3px; transition:width .3s; }
+.checklist-item { display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:10px; cursor:pointer; transition:var(--trans); }
+.checklist-item:hover { background:rgba(43,29,26,.04); }
+.checklist-item input[type=checkbox] { width:17px; height:17px; accent-color:var(--rose-dark); cursor:pointer; flex-shrink:0; }
+.checklist-item span { font-size:.84rem; }
+.checklist-item.done span { text-decoration:line-through; color:var(--ink-faint); }
+.arquivo-item { display:flex; align-items:center; gap:10px; padding:10px 13px; background:rgba(43,29,26,.04); border-radius:10px; margin-bottom:7px; }
+.arquivo-item a { font-size:.82rem; color:var(--rose-dark); text-decoration:none; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.arquivo-item a:hover { text-decoration:underline; }
+.arquivo-tipo-badge { font-size:.58rem; color:var(--ink-faint); background:rgba(43,29,26,.1); padding:2px 8px; border-radius:6px; flex-shrink:0; }
+.arquivo-del { background:none; border:none; color:var(--ink-faint); cursor:pointer; font-size:.95rem; padding:2px 6px; border-radius:6px; transition:var(--trans); }
+.arquivo-del:hover { color:var(--terracota); background:rgba(181,87,63,.08); }
+.add-arq-form { margin-top:14px; padding:14px; background:rgba(43,29,26,.03); border-radius:12px; border:1px dashed rgba(43,29,26,.12); display:flex; flex-direction:column; gap:8px; }
+.add-arq-row { display:flex; gap:8px; }
+.add-arq-row input { flex:1; }
+.add-arq-row select { width:130px; flex-shrink:0; }
+.tab-empty { text-align:center; padding:28px 10px; color:var(--ink-faint); font-size:.78rem; }
+.arquivo-nome { font-size:.8rem; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--ink); }
+.arquivo-item-img { flex-direction:column; align-items:stretch; padding:12px; }
+.arquivo-preview-img { width:100%; height:90px; object-fit:cover; border-radius:8px; margin-bottom:8px; display:block; }
+.arquivo-actions { display:flex; gap:5px; flex-shrink:0; }
+.arquivo-action-btn { background:rgba(43,29,26,.06); border:none; border-radius:6px; padding:4px 9px; font-size:.66rem; cursor:pointer; color:var(--ink-soft); transition:var(--trans); text-decoration:none; display:inline-flex; align-items:center; }
+.arquivo-action-btn:hover { background:rgba(43,29,26,.12); color:var(--ink); }
+.upload-zone { border:2px dashed rgba(43,29,26,.15); border-radius:12px; padding:22px 20px; text-align:center; cursor:pointer; transition:var(--trans); margin-bottom:10px; }
+.upload-zone:hover, .upload-zone.dv { border-color:var(--rose-dark); background:rgba(212,132,154,.05); }
+.upload-zone-text { font-size:.76rem; color:rgba(43,29,26,.45); margin-top:5px; }
+.upload-status { font-size:.74rem; text-align:center; padding:6px 0; color:var(--ink-soft); }
 .modal-head { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:6px; }
 .modal-head h2 { font-family:'Playfair Display',serif; font-size:1.22rem; font-weight:600; line-height:1.3; }
 .modal .close-x { background:none; border:none; font-size:1.2rem; color:var(--ink-soft); cursor:pointer; line-height:1; }
@@ -213,7 +257,7 @@ textarea { resize:vertical; min-height:64px; font-family:'Comfortaa',sans-serif;
 .rel-card-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
 .rel-pilar-name { font-size:.78rem; font-weight:700; }
 .rel-meta-badge { font-size:.6rem; background:rgba(253,248,243,.08); padding:3px 9px; border-radius:999px; color:rgba(253,248,243,.4); }
-.rel-stats { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-bottom:10px; text-align:center; }
+.rel-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:10px; text-align:center; }
 .rel-stat-n { font-size:1.1rem; font-weight:700; line-height:1; }
 .rel-stat-l { font-size:.54rem; color:rgba(253,248,243,.35); margin-top:3px; text-transform:uppercase; letter-spacing:.3px; }
 .rel-bar-track { height:5px; background:rgba(253,248,243,.09); border-radius:3px; overflow:hidden; margin-bottom:8px; }
@@ -237,6 +281,110 @@ textarea { resize:vertical; min-height:64px; font-family:'Comfortaa',sans-serif;
 .rhythm-logic { font-size:.6rem; color:rgba(253,248,243,.28); line-height:1.45; font-style:italic; border-top:1px solid rgba(253,248,243,.06); padding-top:6px; margin-top:2px; }
 .rhythm-mantra { font-size:.72rem; color:rgba(253,248,243,.4); line-height:1.6; padding:12px 16px; background:rgba(253,248,243,.03); border-radius:10px; border:1px solid rgba(253,248,243,.06); margin-top:4px; text-align:center; font-style:italic; }
 
+/* ── DASHBOARD ── */
+.dash-wrap { padding:24px 34px 48px; }
+.dash-header { margin-bottom:24px; position:relative; }
+.dash-greeting { font-family:'Playfair Display',serif; font-size:1.55rem; font-weight:600; color:var(--cream); line-height:1.2; }
+.dash-date-line { font-size:.8rem; color:rgba(253,248,243,.42); margin-top:5px; text-transform:capitalize; }
+.dash-sugestao { display:inline-flex; align-items:flex-start; gap:12px; margin-top:16px; background:rgba(212,132,154,.10); border:1px solid rgba(212,132,154,.22); border-radius:14px; padding:13px 18px; max-width:580px; }
+.dash-sugestao-icon { font-size:1rem; flex-shrink:0; margin-top:2px; }
+.dash-sugestao-text strong { display:block; font-size:.82rem; font-weight:700; color:var(--rose); margin-bottom:3px; }
+.dash-sugestao-text span { font-size:.74rem; color:rgba(253,248,243,.55); line-height:1.5; }
+.dash-simple-btn { position:absolute; top:0; right:0; }
+.dash-actions { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:22px; }
+.dash-action-card { background:rgba(253,248,243,.04); border:1px solid rgba(253,248,243,.07); border-radius:14px; padding:16px 12px; text-align:center; cursor:pointer; transition:var(--trans); }
+.dash-action-card:hover { background:rgba(253,248,243,.08); transform:translateY(-2px); }
+.dash-action-icon { font-size:1.35rem; margin-bottom:8px; }
+.dash-action-count { font-size:1.55rem; font-weight:700; color:var(--cream); line-height:1; }
+.dash-action-count.zero { color:rgba(253,248,243,.18); }
+.dash-action-label { font-size:.6rem; font-weight:700; color:rgba(253,248,243,.4); text-transform:uppercase; letter-spacing:.4px; margin-top:5px; }
+.dash-cols { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px; }
+.dash-section { background:rgba(253,248,243,.03); border-radius:18px; border:1px solid rgba(253,248,243,.07); padding:18px 20px; }
+.dash-section-title { font-size:.57rem; font-weight:700; letter-spacing:.9px; text-transform:uppercase; color:rgba(253,248,243,.3); margin-bottom:13px; }
+.dash-empty { text-align:center; padding:18px 10px; color:rgba(253,248,243,.22); font-size:.74rem; }
+.dash-post { background:var(--cream); border-radius:12px; padding:11px 14px 11px 17px; position:relative; margin-bottom:8px; cursor:pointer; transition:var(--trans); }
+.dash-post:hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,0,0,.22); }
+.dash-post-title { font-family:'Playfair Display',serif; font-size:.87rem; font-weight:600; color:var(--ink); line-height:1.3; }
+.dash-post-meta { font-size:.62rem; color:var(--ink-soft); margin-top:4px; display:flex; gap:10px; flex-wrap:wrap; }
+.dash-post-status { display:inline-block; font-size:.58rem; font-weight:700; padding:2px 8px; border-radius:999px; margin-top:5px; }
+.dash-next-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.dash-next-card { background:rgba(253,248,243,.04); border:1px solid rgba(253,248,243,.07); border-radius:14px; padding:14px 16px; cursor:pointer; transition:var(--trans); }
+.dash-next-card:hover { background:rgba(253,248,243,.08); border-color:rgba(253,248,243,.15); }
+.dash-next-dias { font-size:.6rem; font-weight:700; color:rgba(253,248,243,.32); text-transform:uppercase; letter-spacing:.4px; margin-bottom:7px; }
+.dash-next-titulo { font-size:.82rem; font-weight:700; color:var(--cream); line-height:1.35; }
+.dash-next-pilar { font-size:.6rem; font-weight:700; margin-top:8px; }
+.dash-alert-item { display:flex; align-items:center; gap:10px; padding:10px 12px; background:var(--terracota-bg); border:1px solid rgba(181,87,63,.3); border-radius:10px; margin-bottom:7px; cursor:pointer; transition:var(--trans); }
+.dash-alert-item:hover { background:rgba(181,87,63,.2); }
+.dash-alert-text { font-size:.76rem; flex:1; }
+.dash-alert-text strong { color:var(--terracota); display:block; }
+.dash-alert-text span { color:rgba(253,248,243,.45); font-size:.66rem; }
+.simple-wrap { padding:24px 34px 48px; }
+.simple-section { margin-bottom:26px; }
+.simple-section-title { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:600; color:var(--cream); margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid rgba(253,248,243,.08); display:flex; align-items:center; gap:10px; }
+.simple-section-count { font-size:.68rem; background:rgba(253,248,243,.08); padding:2px 10px; border-radius:999px; color:rgba(253,248,243,.45); font-family:'Comfortaa',sans-serif; font-weight:700; }
+.simple-post { display:flex; align-items:center; gap:12px; padding:12px 16px; background:rgba(253,248,243,.04); border-radius:12px; border:1px solid rgba(253,248,243,.07); margin-bottom:8px; cursor:pointer; transition:var(--trans); }
+.simple-post:hover { background:rgba(253,248,243,.08); }
+.simple-post-color { width:4px; height:36px; border-radius:2px; flex-shrink:0; }
+.simple-post-info { flex:1; }
+.simple-post-title { font-size:.85rem; font-weight:700; color:var(--cream); }
+.simple-post-meta { font-size:.63rem; color:rgba(253,248,243,.42); margin-top:2px; }
+.simple-empty { text-align:center; padding:14px; color:rgba(253,248,243,.22); font-size:.74rem; background:rgba(253,248,243,.02); border-radius:10px; }
+.dash-planner { margin-bottom:20px; display:flex; flex-direction:column; gap:8px; }
+.dash-planner-rec { background:rgba(201,164,74,.08); border:1px solid rgba(201,164,74,.2); border-radius:14px; padding:14px 18px; }
+.dash-planner-rec-label { font-size:.58rem; font-weight:700; letter-spacing:.7px; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+.dash-planner-rec-text { font-size:.82rem; color:rgba(253,248,243,.82); line-height:1.55; }
+.dash-planner-alert { background:rgba(181,87,63,.07); border:1px solid rgba(181,87,63,.2); border-radius:11px; padding:10px 14px; font-size:.75rem; color:rgba(253,248,243,.72); display:flex; align-items:center; gap:8px; }
+.dash-planner-ok { background:rgba(106,156,90,.07); border:1px solid rgba(106,156,90,.18); border-radius:12px; padding:12px 16px; font-size:.78rem; color:rgba(253,248,243,.6); }
+.mix-days-since { font-size:.6rem; margin-top:6px; }
+.mix-days-since.ok   { color:rgba(253,248,243,.28); }
+.mix-days-since.warn { color:var(--gold); }
+.mix-days-since.late { color:var(--terracota); }
+.consistency-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+.consistency-card { background:rgba(253,248,243,.04); border-radius:14px; padding:16px; border:1px solid rgba(253,248,243,.07); text-align:center; }
+.consistency-n { font-size:2rem; font-weight:700; line-height:1; margin-bottom:4px; }
+.consistency-label { font-size:.57rem; color:rgba(253,248,243,.3); text-transform:uppercase; letter-spacing:.4px; }
+.consistency-pilar { font-size:.66rem; font-weight:700; margin-top:6px; }
+.funil-row { display:flex; gap:12px; margin-bottom:20px; }
+.funil-item { flex:1; background:rgba(253,248,243,.04); border-radius:14px; padding:16px; border:1px solid rgba(253,248,243,.07); text-align:center; }
+.funil-n { font-size:1.6rem; font-weight:700; line-height:1; }
+.funil-l { font-size:.6rem; color:rgba(253,248,243,.38); margin-top:4px; text-transform:uppercase; letter-spacing:.3px; }
+.funil-sub { font-size:.6rem; color:rgba(253,248,243,.3); margin-top:4px; line-height:1.4; }
+.funil-bar { height:4px; background:rgba(253,248,243,.09); border-radius:2px; overflow:hidden; margin-top:10px; }
+.funil-fill { height:100%; border-radius:2px; }
+.week-section { margin-top:4px; }
+.week-chart-title { font-size:.58rem; font-weight:700; color:rgba(253,248,243,.3); text-transform:uppercase; letter-spacing:.5px; margin-bottom:12px; }
+.week-chart { display:flex; align-items:flex-end; gap:10px; height:64px; }
+.week-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; height:100%; justify-content:flex-end; }
+.week-bar { width:100%; border-radius:4px 4px 0 0; min-height:3px; background:var(--rose); opacity:.65; }
+.week-bar-n { font-size:.64rem; font-weight:700; color:rgba(253,248,243,.65); }
+.week-bar-label { font-size:.54rem; color:rgba(253,248,243,.28); white-space:nowrap; }
+.search-wrap { padding:24px 34px 48px; max-width:860px; }
+.search-bar-wrap { margin-bottom:14px; }
+.search-input { font-family:'Comfortaa',sans-serif; font-size:.9rem; padding:13px 18px; border-radius:14px; border:1.5px solid rgba(253,248,243,.12); background:rgba(253,248,243,.05); color:var(--cream); width:100%; outline:none; transition:var(--trans); }
+.search-input:focus { border-color:var(--rose); background:rgba(253,248,243,.08); }
+.search-input::placeholder { color:rgba(253,248,243,.22); }
+.search-filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+.search-results { display:flex; flex-direction:column; gap:8px; }
+.search-result { background:rgba(253,248,243,.04); border:1px solid rgba(253,248,243,.07); border-radius:14px; padding:16px 18px; cursor:pointer; transition:var(--trans); }
+.search-result:hover { background:rgba(253,248,243,.08); border-color:rgba(253,248,243,.14); transform:translateY(-1px); }
+.search-result-title { font-family:'Playfair Display',serif; font-size:.95rem; font-weight:600; color:var(--cream); margin-bottom:7px; line-height:1.3; }
+.search-result-meta { font-size:.68rem; color:rgba(253,248,243,.42); display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+.search-result-snippet { font-size:.75rem; color:rgba(253,248,243,.52); line-height:1.6; background:rgba(253,248,243,.03); border-radius:8px; padding:8px 12px; margin-top:9px; }
+.search-empty { text-align:center; padding:48px 20px; color:rgba(253,248,243,.22); font-size:.82rem; }
+mark { background:rgba(212,132,154,.35); color:var(--cream); border-radius:3px; padding:0 2px; font-style:normal; }
+#loading-bar { position:fixed; top:0; left:0; right:0; height:2px; z-index:9999; pointer-events:none; overflow:hidden; display:none; }
+#loading-bar::after { content:''; position:absolute; height:100%; width:45%; background:var(--rose); animation:loadmove 1.1s ease-in-out infinite; }
+@keyframes loadmove { 0%{left:-45%;opacity:.6} 50%{opacity:1} 100%{left:110%;opacity:.6} }
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:9998; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+.toast { background:rgba(30,18,16,.97); color:var(--cream); padding:12px 18px 12px 16px; border-radius:12px; font-size:.8rem; font-weight:600; box-shadow:0 6px 24px rgba(0,0,0,.35); transform:translateY(12px); opacity:0; transition:all .22s cubic-bezier(.4,0,.2,1); pointer-events:auto; max-width:300px; display:flex; align-items:center; gap:10px; border-left:3px solid var(--rose); }
+.toast.show { transform:translateY(0); opacity:1; }
+.toast.success { border-left-color:var(--green); }
+.toast.error { border-left-color:var(--terracota); }
+.tab-badge { background:rgba(43,29,26,.12); color:var(--ink-soft); border-radius:999px; padding:1px 7px; font-size:.55rem; margin-left:4px; font-weight:700; vertical-align:middle; display:inline-block; }
+.tab-badge.done { background:rgba(106,156,90,.2); color:var(--green); }
+.tab-badge.rose { background:rgba(212,132,154,.2); color:var(--rose-dark); }
+.cal-day { cursor:pointer; }
+
 @media (max-width:860px) {
   .shelf { width:0; overflow:hidden; }
   .main { margin-left:0; }
@@ -245,6 +393,9 @@ textarea { resize:vertical; min-height:64px; font-family:'Comfortaa',sans-serif;
 </style>
 </head>
 <body>
+
+<div id="loading-bar"></div>
+<div class="toast-container" id="toast-container"></div>
 
 <div class="shell">
 
@@ -267,6 +418,9 @@ textarea { resize:vertical; min-height:64px; font-family:'Comfortaa',sans-serif;
   </aside>
 
   <main class="main">
+
+    <div id="dash-view" style="display:none;"></div>
+    <div id="search-view" style="display:none;"></div>
 
     <div id="board-view" style="display:none;">
       <div class="topbar">
@@ -328,10 +482,14 @@ const NETWORKS = [
 ];
 
 const STATUSES = [
-  { key:'planejar',  label:'A planejar' },
-  { key:'design',    label:'Em produção' },
-  { key:'pronto',    label:'Pronto p/ agendar' },
-  { key:'publicado', label:'Publicado' },
+  { key:'ideia',        label:'Banco de Ideias',    color:'#9b7fd1' },
+  { key:'roteiro',      label:'Roteirizar',          color:'#5ab4c8' },
+  { key:'producao',     label:'Produzir Arte/Vídeo', color:'#d18b5a' },
+  { key:'legenda',      label:'Escrever Legenda',    color:'#c9a44a' },
+  { key:'revisao',      label:'Revisar',             color:'#d4849a' },
+  { key:'agendar',      label:'Pronto p/ Agendar',   color:'#7ab0d0' },
+  { key:'publicado',    label:'Publicado',           color:'#6a9c5a' },
+  { key:'reaproveitar', label:'Reaproveitar',        color:'#a08060' },
 ];
 
 const PILAR_COLOR = {
@@ -354,17 +512,62 @@ const ICONS = {
   tk: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><path d="M14 4v9.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c0 2.5 2 4.4 4.5 4.5"/></svg>',
   fb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><path d="M15 4h-2.2A3.8 3.8 0 0 0 9 7.8V10H7v3h2v7h3v-7h2.3l.7-3H12V8a1 1 0 0 1 1-1h2z"/></svg>',
   wa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><circle cx="12" cy="12" r="9"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-2-2.6-1.2-.6 1A4.2 4.2 0 0 1 10 10.6l1-.6L9.8 7.4 9 9.5z"/></svg>',
-  cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/><rect x="7" y="14" width="2" height="2" rx=".5"/><rect x="11" y="14" width="2" height="2" rx=".5"/></svg>',
-  rep: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>',
+  cal:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/><rect x="7" y="14" width="2" height="2" rx=".5"/><rect x="11" y="14" width="2" height="2" rx=".5"/></svg>',
+  rep:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>',
+  home:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="net-icon"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>',
 };
 
+const RHYTHM_DOW = {
+  1: { pilar:'Educação Profunda', motivo:'Abre a semana ensinando — gera salvamentos e alcance orgânico.' },
+  2: { pilar:'Educação Profunda', motivo:'Aprofunda o tema de segunda — dobra autoridade antes de qualquer CTA.' },
+  3: { pilar:'Bastidores',        motivo:'Pilar de transição — humaniza a marca e mantém engajamento.' },
+  4: { pilar:'Prova Social',      motivo:'Audiência educada — agora vê prova de que funciona.' },
+  5: { pilar:'Venda Direta',      motivo:'Fecha a semana convertendo quem foi aquecido.' },
+};
+
+let dashSimple = false;
+
+const FUNIL_MAP = {
+  'Educação Profunda': 'topo',
+  'Bastidores':        'topo',
+  'Prova Social':      'meio',
+  'Venda Direta':      'fundo',
+  'Geral':             'meio',
+};
+
+const CHECKLISTS = {
+  'Carrossel':     ['Capa pronta', 'Slides feitos', 'CTA no último slide', 'Legenda pronta', 'Hashtags definidas', 'Agendado na plataforma'],
+  'Reel':          ['Roteiro escrito', 'Gravação feita', 'Edição concluída', 'Capa definida', 'Legenda pronta', 'CTA no vídeo', 'Agendado na plataforma'],
+  'Stories':       ['Sequência definida', 'Enquete ou caixa de perguntas', 'CTA no story'],
+  'Post estático': ['Arte pronta', 'Texto na arte revisado', 'Legenda pronta', 'Hashtags definidas', 'Agendado na plataforma'],
+  'Vídeo':         ['Roteiro escrito', 'Gravação feita', 'Edição concluída', 'Thumbnail pronta', 'Legenda pronta', 'Agendado na plataforma'],
+};
+const CHECKLIST_DEFAULT = ['Conteúdo criado', 'Legenda pronta', 'Revisão feita', 'Agendado na plataforma'];
+
 /* ───────────────────────── ESTADO ───────────────────────── */
+
+let modalState = null;
+let pendingNewPostDate = null;
+
+function showLoading() { document.getElementById('loading-bar').style.display = 'block'; }
+function hideLoading() { document.getElementById('loading-bar').style.display = 'none'; }
+
+function showToast(msg, type = 'info') {
+  const tc = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.textContent = msg;
+  tc.appendChild(t);
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 260); }, 3000);
+}
 
 let STATE = {
   activeClient: CLIENTE_ID,
   activeNet: 'instagram',
   filter: 'all',
-  view: 'kanban',
+  view: 'dashboard',
   calYear: new Date().getFullYear(),
   calMonth: new Date().getMonth(),
   posts: [],
@@ -374,8 +577,24 @@ let STATE = {
 /* ───────────────────────── BOOT / DADOS ───────────────────────── */
 
 async function boot() {
+  showLoading();
   document.getElementById('board-view').style.display = 'block';
   await renderAll();
+  hideLoading();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const top = document.querySelector('.overlay');
+      if (top) { top._escCleanup?.(); top.remove(); }
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault(); STATE.view = 'search'; renderAll();
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+      const btn = document.querySelector('.overlay #m-save');
+      if (btn) { e.preventDefault(); btn.click(); }
+    }
+  });
 }
 
 async function fetchPosts() {
@@ -406,6 +625,34 @@ function fmtDateBR(iso) {
   return `${d}/${m}/${y}`;
 }
 function fmtTime(t) { return t ? t.slice(0,5) : ''; }
+
+function normStatus(s) {
+  const map = { 'planejar':'ideia', 'design':'producao', 'pronto':'agendar' };
+  return map[s] || s;
+}
+
+function parseJSON(str, fallback) {
+  try { return JSON.parse(str || 'null') ?? fallback; } catch { return fallback; }
+}
+
+function getChecklist(formato) {
+  const key = Object.keys(CHECKLISTS).find(k => k.toLowerCase() === (formato||'').toLowerCase());
+  return key ? CHECKLISTS[key] : CHECKLIST_DEFAULT;
+}
+
+function checklistProgress(post) {
+  const items = getChecklist(post.formato || '');
+  const done = parseJSON(post.checklist_done, {});
+  const doneCount = items.filter(item => done[item]).length;
+  const total = items.length;
+  const pct = total ? Math.round((doneCount / total) * 100) : 0;
+  const color = pct === 100 ? '#6a9c5a' : pct >= 50 ? '#c9a44a' : 'rgba(43,29,26,.18)';
+  if (doneCount === 0 && total > 0 && !post.checklist_done) return '';
+  return `<div class="ficha-cl">
+    <div class="ficha-cl-track"><div class="ficha-cl-fill" style="width:${pct}%;background:${color}"></div></div>
+    <span class="ficha-cl-label" style="color:${color}">${doneCount}/${total}</span>
+  </div>`;
+}
 
 function isLate(post) {
   if (post.status === 'publicado') return false;
@@ -438,7 +685,17 @@ function renderClientFixed() {
 
 function renderNetNav() {
   const nav = document.getElementById('net-nav');
-  nav.innerHTML = NETWORKS.map(n => `
+  nav.innerHTML = `
+    <button class="net-btn ${STATE.view==='dashboard'?'active':''}" id="dash-nav-btn">
+      ${ICONS['home']}
+      <span>Hoje</span>
+    </button>
+    <button class="net-btn ${STATE.view==='search'?'active':''}" id="search-nav-btn">
+      ${ICONS['search']}
+      <span>Buscar</span>
+    </button>
+    <div class="shelf-divider" style="margin:8px 4px 8px"></div>
+  ` + NETWORKS.map(n => `
     <button class="net-btn ${n.key===STATE.activeNet && STATE.view==='kanban'?'active':''}" data-net="${n.key}">
       ${ICONS[n.icon]}
       <span>${n.label}</span>
@@ -455,6 +712,14 @@ function renderNetNav() {
       <span>Relatórios</span>
     </button>
   `;
+  nav.querySelector('#dash-nav-btn').addEventListener('click', async () => {
+    STATE.view = 'dashboard';
+    await renderAll();
+  });
+  nav.querySelector('#search-nav-btn').addEventListener('click', async () => {
+    STATE.view = 'search';
+    await renderAll();
+  });
   nav.querySelectorAll('.net-btn[data-net]').forEach(btn => {
     btn.addEventListener('click', async () => {
       STATE.activeNet = btn.dataset.net;
@@ -479,8 +744,34 @@ async function renderAll() {
   renderClientFixed();
   renderNetNav();
 
-  const boardView = document.getElementById('board-view');
-  const soonView = document.getElementById('soon-view');
+  const boardView  = document.getElementById('board-view');
+  const soonView   = document.getElementById('soon-view');
+  const dashView   = document.getElementById('dash-view');
+  const searchView = document.getElementById('search-view');
+
+  if (STATE.view === 'dashboard') {
+    soonView.style.display   = 'none';
+    boardView.style.display  = 'none';
+    dashView.style.display   = 'block';
+    searchView.style.display = 'none';
+    await fetchAllPosts();
+    renderDashboard();
+    return;
+  }
+
+  if (STATE.view === 'search') {
+    soonView.style.display   = 'none';
+    boardView.style.display  = 'none';
+    dashView.style.display   = 'none';
+    searchView.style.display = 'block';
+    await fetchAllPosts();
+    renderSearchView();
+    return;
+  }
+
+  dashView.style.display   = 'none';
+  searchView.style.display = 'none';
+  boardView.style.display  = 'block';
 
   if (STATE.view === 'calendar') {
     soonView.style.display = 'none';
@@ -542,6 +833,7 @@ async function renderAll() {
   document.getElementById('page-sub').textContent = clienteNome(STATE.activeClient);
 
   await fetchPosts();
+  await fetchAllPosts();
   renderMixStrip();
   renderFilters();
   if (STATE.view === 'kanban') {
@@ -593,10 +885,11 @@ function renderBoard() {
   STATUSES.forEach(stage => {
     const col = document.createElement('div');
     col.className = 'col';
-    const items = posts.filter(p => p.status === stage.key)
+    col.style.borderTop = `2px solid ${stage.color}55`;
+    const items = posts.filter(p => normStatus(p.status) === stage.key)
       .sort((a,b) => (isLate(b)?1:0) - (isLate(a)?1:0));
 
-    col.innerHTML = `<div class="col-head"><span>${stage.label}</span><span class="n">${items.length}</span></div>`;
+    col.innerHTML = `<div class="col-head" style="color:${stage.color}"><span>${stage.label}</span><span class="n" style="background:${stage.color}22;color:${stage.color}">${items.length}</span></div>`;
     if (items.length === 0) col.innerHTML += `<div class="empty-col">Nenhum post aqui ainda</div>`;
 
     items.forEach(p => {
@@ -606,7 +899,17 @@ function renderBoard() {
       const card = document.createElement('div');
       card.className = 'ficha' + (late ? ' late' : '');
       card.style.setProperty('--marker', color);
+      const arqParsed = parseJSON(p.arquivos, []);
+      const firstImg = arqParsed.find(a => isImageUrl(a.url));
+      const nextIdx = STATUSES.findIndex(s => s.key === normStatus(p.status)) + 1;
+      const nextStg = STATUSES[nextIdx];
       card.innerHTML = `
+        <div class="ficha-actions">
+          ${p.legenda ? `<button class="ficha-act-btn" data-action="copy-leg" title="Copiar legenda">📋</button>` : ''}
+          ${nextStg ? `<button class="ficha-act-btn" data-action="advance" data-next="${nextStg.key}" title="→ ${nextStg.label}" style="color:${nextStg.color}">→</button>` : ''}
+          ${normStatus(p.status)==='agendar' && !p.agendado ? `<button class="ficha-act-btn" data-action="agendar" title="Marcar agendado">📅</button>` : ''}
+        </div>
+        ${firstImg ? `<img class="ficha-img" src="${firstImg.url}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}
         ${late ? `<div class="ficha-late-flag">⏳ ${lateLabel(p)}</div>` : ''}
         <span class="ficha-tag" style="background:${color}22; color:${color};">${p.pilar}</span>
         <div class="ficha-tema">${p.tema}</div>
@@ -614,11 +917,31 @@ function renderBoard() {
           <span>📅 <b>${p.dia_semana ? p.dia_semana.slice(0,3) : ''} ${fmtDateBR(p.data)}</b></span>
           <span>🕐 <b>${fmtTime(p.horario)}</b></span>
         </div>
+        ${checklistProgress(p)}
         <div class="ficha-foot">
           <span class="fmt-pill">${p.formato}</span>
           <span class="sched-dot ${p.agendado?'on':'off'}">${p.agendado ? '● agendado' : '○ não agendado'}</span>
         </div>
       `;
+      card.querySelectorAll('.ficha-act-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const action = btn.dataset.action;
+          if (action === 'copy-leg') {
+            try {
+              await navigator.clipboard.writeText(p.legenda);
+              btn.textContent = '✓';
+              setTimeout(() => { btn.textContent = '📋'; }, 1500);
+            } catch { alert(p.legenda); }
+          } else if (action === 'advance') {
+            const { error } = await sb.from('posts').update({ status: btn.dataset.next }).eq('id', p.id);
+            if (!error) await renderAll();
+          } else if (action === 'agendar') {
+            const { error } = await sb.from('posts').update({ agendado: true }).eq('id', p.id);
+            if (!error) await renderAll();
+          }
+        });
+      });
       card.addEventListener('click', () => openModal(p.id));
       col.appendChild(card);
     });
@@ -674,13 +997,167 @@ async function copiarBriefing(postId, btn) {
   }
 }
 
-/* ───────────────────────── MODAL ───────────────────────── */
+/* ───────────────────────── MODAL COM ABAS ───────────────────────── */
+
+function isImageUrl(url) {
+  return /\.(jpg|jpeg|png|gif|webp|svg)(\?.*)?$/i.test(url);
+}
+
+async function uploadFiles(files, overlay) {
+  if (!files.length) return;
+  const statusEl = overlay.querySelector('#arq-status');
+  statusEl.textContent = `Enviando ${files.length} arquivo(s)…`;
+  statusEl.style.display = 'block';
+
+  for (const file of files) {
+    const postId = modalState.post?.id || 'novo';
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const path = `${STATE.activeClient}/${postId}/${Date.now()}_${safeName}`;
+
+    const { error } = await sb.storage.from('post-assets').upload(path, file, { upsert: true });
+    if (error) { statusEl.textContent = `Erro: ${error.message}`; continue; }
+
+    const { data: { publicUrl } } = sb.storage.from('post-assets').getPublicUrl(path);
+    const tipo = file.type.startsWith('image/') ? 'Imagem'
+      : file.type.startsWith('video/') ? 'Vídeo' : 'Documento';
+    modalState.arquivos.push({ nome: file.name, url: publicUrl, tipo, path });
+  }
+
+  statusEl.style.display = 'none';
+  renderArquivosTab(overlay);
+}
+
+function renderArquivosTab(overlay) {
+  const container = overlay.querySelector('#tab-arquivos');
+  const arqs = modalState.arquivos;
+
+  const listHTML = arqs.map((a, i) => {
+    const isImg = isImageUrl(a.url);
+    const actions = `<div class="arquivo-actions">
+      <a href="${a.url}" target="_blank" rel="noopener" class="arquivo-action-btn">Abrir</a>
+      <a href="${a.url}" download="${a.nome||''}" class="arquivo-action-btn" title="Download">↓ Baixar</a>
+      <button class="arquivo-del" data-idx="${i}" title="Remover">✕</button>
+    </div>`;
+    if (isImg) {
+      return `<div class="arquivo-item arquivo-item-img">
+        <img class="arquivo-preview-img" src="${a.url}" alt="${a.nome||''}" loading="lazy" onerror="this.style.display='none'">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="arquivo-tipo-badge">${a.tipo}</span>
+          <span class="arquivo-nome">${a.nome||a.url}</span>
+          ${actions}
+        </div>
+      </div>`;
+    }
+    return `<div class="arquivo-item">
+      <span class="arquivo-tipo-badge">${a.tipo}</span>
+      <span class="arquivo-nome">${a.nome||a.url}</span>
+      ${actions}
+    </div>`;
+  }).join('');
+
+  container.innerHTML = `
+    ${arqs.length === 0 ? '<div class="tab-empty">Nenhum arquivo ainda. Faça upload ou adicione um link.</div>' : ''}
+    <div id="arq-list">${listHTML}</div>
+
+    <div class="upload-zone" id="arq-zone">
+      <input type="file" id="arq-file" multiple accept="image/*,video/*,.pdf,.doc,.docx,.pptx,.ai,.psd" style="display:none">
+      <div style="font-size:1.4rem">📁</div>
+      <div class="upload-zone-text">Clique para selecionar ou arraste arquivos aqui</div>
+      <div style="font-size:.6rem;color:rgba(43,29,26,.3);margin-top:3px">Imagens, vídeos, documentos · Requer bucket <em>post-assets</em> no Supabase Storage</div>
+    </div>
+    <div id="arq-status" class="upload-status" style="display:none"></div>
+
+    <details style="margin-top:8px">
+      <summary style="font-size:.73rem;color:var(--ink-faint);cursor:pointer;padding:8px 2px;list-style:none">
+        + Adicionar por link (Google Drive, Canva…)
+      </summary>
+      <div class="add-arq-form" style="margin-top:8px">
+        <div class="fld" style="margin:0"><label>Nome do arquivo</label><input type="text" id="arq-nome" placeholder="Ex: Capa carrossel final"></div>
+        <div class="add-arq-row">
+          <input type="text" id="arq-url" placeholder="Cole o link aqui">
+          <select id="arq-tipo">
+            <option>Imagem</option><option>Vídeo</option><option>Capa</option>
+            <option>Criativo final</option><option>Documento</option><option>Outro</option>
+          </select>
+        </div>
+        <button class="btn btn-prim" id="arq-add" style="width:100%;justify-content:center;margin-top:4px">+ Adicionar link</button>
+      </div>
+    </details>`;
+
+  container.querySelectorAll('.arquivo-del').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.idx);
+      const arq = modalState.arquivos[idx];
+      if (arq.path) sb.storage.from('post-assets').remove([arq.path]);
+      modalState.arquivos.splice(idx, 1);
+      renderArquivosTab(overlay);
+    });
+  });
+
+  const zone = container.querySelector('#arq-zone');
+  const fileInput = container.querySelector('#arq-file');
+  zone.addEventListener('click', () => fileInput.click());
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dv'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('dv'));
+  zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('dv'); uploadFiles(Array.from(e.dataTransfer.files), overlay); });
+  fileInput.addEventListener('change', () => uploadFiles(Array.from(fileInput.files), overlay));
+
+  const addBtn = container.querySelector('#arq-add');
+  if (addBtn) {
+    addBtn.addEventListener('click', () => {
+      const url = container.querySelector('#arq-url').value.trim();
+      if (!url) return;
+      modalState.arquivos.push({ nome: container.querySelector('#arq-nome').value.trim() || url, url, tipo: container.querySelector('#arq-tipo').value });
+      renderArquivosTab(overlay);
+    });
+  }
+}
+
+function renderChecklistTab(overlay) {
+  const container = overlay.querySelector('#tab-checklist');
+  const formato = overlay.querySelector('#m-formato')?.value || '';
+  const items = getChecklist(formato);
+  const done = modalState.checklist;
+  const doneCount = items.filter(item => done[item]).length;
+  const pct = items.length ? Math.round((doneCount / items.length) * 100) : 0;
+
+  container.innerHTML = `
+    <div class="cl-progress-label">
+      <span>${doneCount} de ${items.length} itens concluídos</span>
+      <span>${pct}%</span>
+    </div>
+    <div class="cl-progress"><div class="cl-progress-fill" style="width:${pct}%"></div></div>
+    ${items.map(item => `
+      <label class="checklist-item ${done[item] ? 'done' : ''}" data-item="${encodeURIComponent(item)}">
+        <input type="checkbox" ${done[item] ? 'checked' : ''} data-item="${encodeURIComponent(item)}">
+        <span>${item}</span>
+      </label>`).join('')}
+    <div style="font-size:.62rem;color:var(--ink-faint);margin-top:14px;padding-top:10px;border-top:1px dashed rgba(43,29,26,.12)">
+      Checklist para: <strong>${formato || 'formato não definido na aba Estratégia'}</strong>
+    </div>`;
+
+  container.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const item = decodeURIComponent(cb.dataset.item);
+      modalState.checklist[item] = cb.checked;
+      renderChecklistTab(overlay);
+    });
+  });
+}
 
 function openModal(postId) {
   const isNew = !postId;
   const post = isNew
-    ? { id:null, data:new Date().toISOString().slice(0,10), dia_semana:'', horario:'19:00', formato:'Carrossel', tema:'', objetivo:'', cta:'', hashtags:'', legenda:'', briefing_visual:'', story_apoio:'', pilar:'Educação Profunda', status:'planejar', agendado:false }
+    ? { id:null, data: pendingNewPostDate || new Date().toISOString().slice(0,10), dia_semana:'', horario:'19:00', formato:'Carrossel', tema:'', objetivo:'', cta:'', hashtags:'', legenda:'', briefing_visual:'', story_apoio:'', pilar:'Educação Profunda', status:'ideia', agendado:false }
     : (STATE.allPosts.find(p => p.id === postId) || STATE.posts.find(p => p.id === postId));
+
+  pendingNewPostDate = null;
+  modalState = {
+    arquivos: parseJSON(post.arquivos, []),
+    checklist: parseJSON(post.checklist_done, {}),
+    post,
+    isNew,
+  };
 
   const late = !isNew && isLate(post);
   const _redeId = isNew ? STATE.activeNet : (post.rede_id || STATE.activeNet);
@@ -691,111 +1168,212 @@ function openModal(postId) {
   overlay.innerHTML = `
     <div class="modal">
       <div class="modal-head">
-        <h2>${isNew ? 'Novo post' : post.tema}</h2>
+        <h2>${isNew ? 'Nova ideia de conteúdo' : (post.tema || 'Post sem título')}</h2>
         <button class="close-x" id="m-close-x">✕</button>
       </div>
-      <div class="modal-sub">${clienteNome(STATE.activeClient)} · ${_redeLabel}${!isNew ? ' · ' + post.formato : ''}</div>
-
+      <div class="modal-sub">${clienteNome(STATE.activeClient)} · ${_redeLabel}${!isNew && post.formato ? ' · ' + post.formato : ''}</div>
       ${late ? `<div class="modal-alert">⏳ Este post está ${lateLabel(post)}. Atualize a data ou marque como publicado.</div>` : ''}
 
-      <div class="fld">
-        <label>Tema / ideia do post</label>
-        <textarea id="m-tema" placeholder="Ex: 5 erros que você comete ao precificar">${post.tema}</textarea>
+      <div class="modal-tabs">
+        <button class="tab-btn active" data-tab="estrategia">Estratégia</button>
+        <button class="tab-btn" data-tab="roteiro">Roteiro</button>
+        <button class="tab-btn" data-tab="legenda">Legenda</button>
+        <button class="tab-btn" data-tab="arquivos">Arquivos</button>
+        <button class="tab-btn" data-tab="checklist">Checklist</button>
+        <button class="tab-btn" data-tab="publicacao">Publicação</button>
       </div>
 
-      <div class="row2">
-        <div class="fld"><label>Data</label><input type="date" id="m-date" value="${post.data}"></div>
-        <div class="fld"><label>Horário</label><input type="time" id="m-time" value="${fmtTime(post.horario)}"></div>
-      </div>
-
-      <div class="row2">
+      <div class="tab-panel active" id="tab-estrategia">
         <div class="fld">
-          <label>Formato</label>
-          <input type="text" id="m-formato" value="${post.formato || ''}" placeholder="Carrossel, Reel, Post estático...">
+          <label>Tema / ideia do post</label>
+          <textarea id="m-tema" rows="2" placeholder="Ex: 5 erros que você comete ao precificar">${post.tema || ''}</textarea>
         </div>
-        <div class="fld">
-          <label>Pilar de conteúdo</label>
-          <select id="m-pilar">
-            ${Object.keys(PILAR_COLOR).map(p => `<option ${p===post.pilar?'selected':''}>${p}</option>`).join('')}
-          </select>
+        <div class="row2">
+          <div class="fld">
+            <label>Pilar de conteúdo</label>
+            <select id="m-pilar">${Object.keys(PILAR_COLOR).map(p => `<option ${p===post.pilar?'selected':''}>${p}</option>`).join('')}</select>
+          </div>
+          <div class="fld">
+            <label>Formato</label>
+            <input type="text" id="m-formato" list="formato-opts" value="${post.formato || ''}" placeholder="Carrossel, Reel, Stories...">
+            <datalist id="formato-opts">
+              <option>Carrossel</option><option>Reel</option><option>Post estático</option>
+              <option>Stories</option><option>Vídeo</option>
+            </datalist>
+          </div>
         </div>
+        <div class="fld"><label>Objetivo</label><input type="text" id="m-objetivo" value="${post.objetivo || ''}" placeholder="Ex: Gerar leads, aumentar autoridade..."></div>
+        <div class="fld"><label>Público-alvo</label><input type="text" id="m-publico" value="${post.publico_alvo || ''}" placeholder="Para quem é esse conteúdo?"></div>
+        <div class="fld"><label>Dor que resolve</label><input type="text" id="m-dor" value="${post.dor || ''}" placeholder="Qual problema ou dúvida esse post responde?"></div>
+        <div class="fld"><label>CTA principal</label><input type="text" id="m-cta" value="${post.cta || ''}" placeholder="Ex: Link na bio para testar grátis"></div>
       </div>
 
-      <div class="fld"><label>Objetivo</label><input type="text" id="m-objetivo" value="${post.objetivo || ''}" placeholder="Objetivo de negócio desse post"></div>
-      <div class="fld"><label>CTA principal</label><input type="text" id="m-cta" value="${post.cta || ''}" placeholder="Ex: Link na bio para testar grátis"></div>
-      <div class="fld"><label>Hashtags principais</label><input type="text" id="m-hashtags" value="${post.hashtags || ''}" placeholder="#Marca #Nicho ..."></div>
-
-      <div class="fld">
-        <label>Briefing visual (para o Claude Design)</label>
-        <textarea id="m-briefing" style="min-height:110px;" placeholder="Cole ou escreva aqui o briefing visual completo...">${post.briefing_visual || ''}</textarea>
+      <div class="tab-panel" id="tab-roteiro">
+        <div class="fld"><label>Roteiro</label><textarea id="m-roteiro" style="min-height:120px" placeholder="Escreva o roteiro ou estrutura do conteúdo...">${post.roteiro || ''}</textarea></div>
+        <div class="fld"><label>Texto da capa / gancho</label><textarea id="m-textocapa" rows="2" placeholder="O que aparece na capa ou nos primeiros 3 segundos?">${post.texto_capa || ''}</textarea></div>
+        <div class="fld"><label>Estrutura dos slides (carrossel)</label><textarea id="m-slides" style="min-height:80px" placeholder="Slide 1: ...\nSlide 2: ...">${post.estrutura_slides || ''}</textarea></div>
+        <div class="fld"><label>Briefing visual</label><textarea id="m-briefing" style="min-height:80px" placeholder="Instruções para o design ou para a IA...">${post.briefing_visual || ''}</textarea></div>
+        <div class="fld"><label>Story de apoio</label><textarea id="m-story" rows="2" placeholder="Stories que acompanham esse post...">${post.story_apoio || ''}</textarea></div>
+        <div class="fld"><label>Observações internas</label><textarea id="m-obs" rows="2" placeholder="Notas para você ou para a equipe...">${post.observacoes || ''}</textarea></div>
       </div>
 
-      <div class="fld"><label>Story de apoio</label><textarea id="m-story" placeholder="Stories que acompanham esse post, se houver">${post.story_apoio || ''}</textarea></div>
-
-      <div class="fld">
-        <label>Legenda completa (cole aqui quando estiver pronta)</label>
-        <textarea id="m-legenda" placeholder="Cole aqui a legenda final com SEO, CTA e hashtags...">${post.legenda || ''}</textarea>
+      <div class="tab-panel" id="tab-legenda">
+        <div class="fld"><label>Legenda completa</label><textarea id="m-legenda" style="min-height:160px" placeholder="Cole aqui a legenda final com SEO, CTA e hashtags...">${post.legenda || ''}</textarea></div>
+        <div class="fld"><label>Hashtags</label><input type="text" id="m-hashtags" value="${post.hashtags || ''}" placeholder="#Marca #Nicho #Segmento"></div>
+        <div class="fld"><label>Variação de legenda</label><textarea id="m-varleg" rows="3" placeholder="Versão alternativa, se houver...">${post.variacao_legenda || ''}</textarea></div>
+        <button class="btn" id="m-copy-leg" style="width:100%;justify-content:center;margin-top:4px">📋 Copiar legenda</button>
       </div>
 
-      <div class="fld">
-        <label>Status</label>
-        <select id="m-status">
-          ${STATUSES.map(s => `<option value="${s.key}" ${s.key===post.status?'selected':''}>${s.label}</option>`).join('')}
-        </select>
-      </div>
+      <div class="tab-panel" id="tab-arquivos"></div>
+      <div class="tab-panel" id="tab-checklist"></div>
 
-      <label class="check-line">
-        <input type="checkbox" id="m-agendado" ${post.agendado?'checked':''}>
-        Agendado manualmente no Instagram
-      </label>
+      <div class="tab-panel" id="tab-publicacao">
+        <div class="row2">
+          <div class="fld"><label>Data planejada</label><input type="date" id="m-date" value="${post.data || ''}"></div>
+          <div class="fld"><label>Horário</label><input type="time" id="m-time" value="${fmtTime(post.horario)}"></div>
+        </div>
+        <div class="row2">
+          <div class="fld"><label>Data de agendamento</label><input type="date" id="m-data-agendada" value="${post.data_agendada || ''}"></div>
+          <div class="fld">
+            <label>Status</label>
+            <select id="m-status">${STATUSES.map(s => `<option value="${s.key}" ${s.key===normStatus(post.status)?'selected':''}>${s.label}</option>`).join('')}</select>
+          </div>
+        </div>
+        <div class="fld"><label>Link do post publicado</label><input type="text" id="m-linkpost" value="${post.link_post || ''}" placeholder="https://instagram.com/p/..."></div>
+        <label class="check-line">
+          <input type="checkbox" id="m-agendado" ${post.agendado?'checked':''}>
+          Agendado manualmente no Instagram
+        </label>
+      </div>
 
       <div class="modal-actions">
         ${!isNew ? '<button class="btn copy-briefing-btn" id="m-copy">📋 Copiar briefing</button>' : ''}
       </div>
+      ${!isNew ? '<div class="modal-actions" id="m-advance-row"></div>' : ''}
       <div class="modal-actions">
         ${!isNew ? '<button class="btn" id="m-delete">Excluir</button>' : ''}
-        <button class="btn btn-prim" id="m-save" style="flex:1; justify-content:center;">${isNew ? 'Adicionar post' : 'Salvar alterações'}</button>
+        <button class="btn btn-prim" id="m-save" style="flex:1;justify-content:center">${isNew ? 'Adicionar post' : 'Salvar alterações'}</button>
       </div>
-    </div>
-  `;
+    </div>`;
 
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+  const escHandler = e => { if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', escHandler); } };
+  document.addEventListener('keydown', escHandler);
+  overlay._escCleanup = () => document.removeEventListener('keydown', escHandler);
+  overlay.addEventListener('click', e => { if (e.target === overlay) { overlay.remove(); document.removeEventListener('keydown', escHandler); } });
   document.body.appendChild(overlay);
-  overlay.querySelector('#m-close-x').addEventListener('click', () => overlay.remove());
+  overlay.querySelector('#m-close-x').addEventListener('click', () => { overlay.remove(); document.removeEventListener('keydown', escHandler); });
 
   if (!isNew) {
-    overlay.querySelector('#m-copy').addEventListener('click', (e) => copiarBriefing(post.id, e.target));
+    const arqCount = modalState.arquivos.length;
+    if (arqCount > 0) overlay.querySelector('[data-tab="arquivos"]').innerHTML += `<span class="tab-badge rose">${arqCount}</span>`;
+    const clItems = getChecklist(post.formato || '');
+    const clDone = clItems.filter(i => modalState.checklist[i]).length;
+    if (clItems.length > 0) overlay.querySelector('[data-tab="checklist"]').innerHTML += `<span class="tab-badge ${clDone===clItems.length?'done':''}">${clDone}/${clItems.length}</span>`;
+    if (post.roteiro) overlay.querySelector('[data-tab="roteiro"]').innerHTML += `<span class="tab-badge">✓</span>`;
+    if (post.legenda) overlay.querySelector('[data-tab="legenda"]').innerHTML += `<span class="tab-badge">✓</span>`;
+  }
+
+  overlay.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      overlay.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      overlay.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const panel = overlay.querySelector('#tab-' + btn.dataset.tab);
+      panel.classList.add('active');
+      if (btn.dataset.tab === 'checklist') renderChecklistTab(overlay);
+      if (btn.dataset.tab === 'arquivos')  renderArquivosTab(overlay);
+    });
+  });
+
+  overlay.querySelector('#m-copy-leg').addEventListener('click', async (e) => {
+    const leg = overlay.querySelector('#m-legenda').value;
+    if (!leg) return;
+    try {
+      await navigator.clipboard.writeText(leg);
+      e.target.textContent = '✓ Legenda copiada';
+      setTimeout(() => { e.target.textContent = '📋 Copiar legenda'; }, 2000);
+    } catch { alert(leg); }
+  });
+
+  if (!isNew) {
+    overlay.querySelector('#m-copy').addEventListener('click', e => copiarBriefing(post.id, e.target));
     overlay.querySelector('#m-delete').addEventListener('click', async () => {
       if (!confirm('Excluir este post?')) return;
       const { error } = await sb.from('posts').delete().eq('id', post.id);
-      if (error) { alert('Erro ao excluir: ' + error.message); return; }
+      if (error) { showToast('Erro ao excluir: ' + error.message, 'error'); return; }
       overlay.remove();
+      showToast('Post excluído.', 'info');
       await renderAll();
+    });
+
+    const curIdx = STATUSES.findIndex(s => s.key === normStatus(post.status));
+    const nextStage = STATUSES[curIdx + 1];
+    const advRow = overlay.querySelector('#m-advance-row');
+    if (nextStage && advRow) {
+      advRow.innerHTML = `<button class="btn" id="m-advance" style="flex:1;justify-content:center;border-color:${nextStage.color};color:${nextStage.color}">→ Avançar para: ${nextStage.label}</button>`;
+      advRow.querySelector('#m-advance').addEventListener('click', async () => {
+        const { error } = await sb.from('posts').update({ status: nextStage.key }).eq('id', post.id);
+        if (error) { showToast('Erro: ' + error.message, 'error'); return; }
+        overlay.remove();
+        showToast(`Avançado para: ${nextStage.label}`, 'success');
+        await renderAll();
+      });
+    }
+
+    [{ id:'m-cta', label:'CTA' }, { id:'m-hashtags', label:'Hashtags' }].forEach(({ id, label }) => {
+      const inp = overlay.querySelector('#' + id);
+      if (!inp) return;
+      const copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.className = 'btn';
+      copyBtn.style.cssText = 'margin-top:4px;font-size:.66rem;padding:5px 10px';
+      copyBtn.textContent = `📋 Copiar ${label}`;
+      copyBtn.addEventListener('click', async () => {
+        const val = inp.value; if (!val) return;
+        try {
+          await navigator.clipboard.writeText(val);
+          copyBtn.textContent = `✓ ${label} copiado`;
+          setTimeout(() => { copyBtn.textContent = `📋 Copiar ${label}`; }, 1500);
+        } catch { alert(val); }
+      });
+      inp.parentElement.appendChild(copyBtn);
     });
   }
 
   overlay.querySelector('#m-save').addEventListener('click', async () => {
     const data = overlay.querySelector('#m-date').value;
     const dowNames = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
-    const dia_semana = dowNames[new Date(data+'T00:00:00').getDay()];
+    const dia_semana = data ? dowNames[new Date(data+'T00:00:00').getDay()] : '';
+    const dataAgendada = overlay.querySelector('#m-data-agendada').value || null;
 
     const payload = {
-      cliente_id: STATE.activeClient,
-      rede_id: isNew ? STATE.activeNet : (post.rede_id || STATE.activeNet),
-      tema: overlay.querySelector('#m-tema').value.trim() || 'Sem título',
+      cliente_id:       STATE.activeClient,
+      rede_id:          isNew ? STATE.activeNet : (post.rede_id || STATE.activeNet),
+      tema:             overlay.querySelector('#m-tema').value.trim() || 'Sem título',
       data,
       dia_semana,
-      horario: overlay.querySelector('#m-time').value,
-      formato: overlay.querySelector('#m-formato').value,
-      pilar: overlay.querySelector('#m-pilar').value,
-      objetivo: overlay.querySelector('#m-objetivo').value,
-      cta: overlay.querySelector('#m-cta').value,
-      hashtags: overlay.querySelector('#m-hashtags').value,
-      briefing_visual: overlay.querySelector('#m-briefing').value,
-      story_apoio: overlay.querySelector('#m-story').value,
-      legenda: overlay.querySelector('#m-legenda').value,
-      status: overlay.querySelector('#m-status').value,
-      agendado: overlay.querySelector('#m-agendado').checked,
+      horario:          overlay.querySelector('#m-time').value,
+      formato:          overlay.querySelector('#m-formato').value,
+      pilar:            overlay.querySelector('#m-pilar').value,
+      objetivo:         overlay.querySelector('#m-objetivo').value,
+      publico_alvo:     overlay.querySelector('#m-publico').value,
+      dor:              overlay.querySelector('#m-dor').value,
+      cta:              overlay.querySelector('#m-cta').value,
+      roteiro:          overlay.querySelector('#m-roteiro').value,
+      texto_capa:       overlay.querySelector('#m-textocapa').value,
+      estrutura_slides: overlay.querySelector('#m-slides').value,
+      briefing_visual:  overlay.querySelector('#m-briefing').value,
+      story_apoio:      overlay.querySelector('#m-story').value,
+      observacoes:      overlay.querySelector('#m-obs').value,
+      legenda:          overlay.querySelector('#m-legenda').value,
+      hashtags:         overlay.querySelector('#m-hashtags').value,
+      variacao_legenda: overlay.querySelector('#m-varleg').value,
+      status:           overlay.querySelector('#m-status').value,
+      agendado:         overlay.querySelector('#m-agendado').checked,
+      data_agendada:    dataAgendada,
+      link_post:        overlay.querySelector('#m-linkpost').value,
+      checklist_done:   JSON.stringify(modalState.checklist),
+      arquivos:         JSON.stringify(modalState.arquivos),
     };
 
     let error;
@@ -804,10 +1382,372 @@ function openModal(postId) {
     } else {
       ({ error } = await sb.from('posts').update(payload).eq('id', post.id));
     }
-    if (error) { alert('Erro ao salvar: ' + error.message); return; }
+    if (error) { showToast('Erro ao salvar: ' + error.message, 'error'); return; }
     overlay.remove();
+    showToast(isNew ? 'Post criado!' : 'Alterações salvas!', 'success');
     await renderAll();
   });
+
+  renderArquivosTab(overlay);
+}
+
+/* ───────────────────────── DASHBOARD ───────────────────────── */
+
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Bom dia';
+  if (h < 18) return 'Boa tarde';
+  return 'Boa noite';
+}
+
+function daysUntil(dateStr) {
+  const today  = new Date(new Date().toISOString().slice(0,10) + 'T00:00:00');
+  const target = new Date(dateStr + 'T00:00:00');
+  return Math.round((target - today) / 86400000);
+}
+
+function getSmartInsights() {
+  const today     = new Date().toISOString().slice(0,10);
+  const now       = new Date();
+  const published = STATE.allPosts.filter(p => p.status === 'publicado');
+
+  const daysSince = {};
+  PLANEJAMENTO.forEach(pl => {
+    const last = published
+      .filter(p => p.pilar === pl.pilar)
+      .sort((a,b) => b.data.localeCompare(a.data))[0];
+    if (!last) { daysSince[pl.pilar] = null; return; }
+    const diff = new Date(today+'T00:00:00') - new Date(last.data+'T00:00:00');
+    daysSince[pl.pilar] = Math.round(diff / 86400000);
+  });
+
+  const monthPosts = STATE.allPosts.filter(p => {
+    const d = new Date(p.data+'T00:00:00');
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  });
+
+  const scores = PLANEJAMENTO.map(pl => {
+    const monthCount = monthPosts.filter(p => p.pilar === pl.pilar).length;
+    const deficit    = Math.max(0, pl.meta - monthCount);
+    const days       = daysSince[pl.pilar] ?? 30;
+    return { pilar:pl.pilar, deficit, days, monthCount, meta:pl.meta, pct:pl.pct, color:PILAR_COLOR[pl.pilar], score: deficit*3 + days*0.5 };
+  }).sort((a,b) => b.score - a.score);
+
+  const alerts = PLANEJAMENTO
+    .map(pl => ({ pilar:pl.pilar, days:daysSince[pl.pilar] }))
+    .filter(a => a.days === null || a.days >= 7);
+
+  return { scores, alerts, daysSince };
+}
+
+function renderDashPost(post) {
+  const color  = PILAR_COLOR[post.pilar] || '#c9a44a';
+  const status = STATUSES.find(s => s.key === normStatus(post.status));
+  const items  = getChecklist(post.formato || '');
+  const done   = parseJSON(post.checklist_done, {});
+  const doneN  = items.filter(i => done[i]).length;
+  const pct    = items.length ? Math.round(doneN / items.length * 100) : 0;
+  const clColor = pct === 100 ? '#6a9c5a' : '#c9a44a';
+  return `<div class="dash-post" data-pid="${post.id}">
+    <div style="position:absolute;left:0;top:6px;bottom:6px;width:4px;border-radius:0 3px 3px 0;background:${color}"></div>
+    <div class="dash-post-title">${post.tema || 'Sem título'}</div>
+    <div class="dash-post-meta">
+      <span>${post.formato || ''}</span>
+      ${post.horario ? `<span>🕐 ${fmtTime(post.horario)}</span>` : ''}
+    </div>
+    <span class="dash-post-status" style="background:${status?.color||color}22;color:${status?.color||color}">${status?.label || post.status}</span>
+    ${items.length > 0 ? `<div style="margin-top:8px;display:flex;align-items:center;gap:8px">
+      <div style="flex:1;height:3px;background:rgba(43,29,26,.1);border-radius:2px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${clColor};border-radius:2px"></div>
+      </div>
+      <span style="font-size:.57rem;font-weight:700;color:var(--ink-soft)">${doneN}/${items.length}</span>
+    </div>` : ''}
+  </div>`;
+}
+
+function renderSimpleMode(wrap) {
+  const today = new Date().toISOString().slice(0,10);
+  const sections = [
+    { title:'Hoje',           icon:'📅', posts: STATE.allPosts.filter(p => p.data === today) },
+    { title:'O que gravar',   icon:'🎨', posts: STATE.allPosts.filter(p => normStatus(p.status) === 'producao') },
+    { title:'O que escrever', icon:'📝', posts: STATE.allPosts.filter(p => ['legenda','roteiro'].includes(normStatus(p.status))) },
+    { title:'O que agendar',  icon:'📲', posts: STATE.allPosts.filter(p => normStatus(p.status) === 'agendar') },
+    { title:'O que publicar', icon:'✅', posts: STATE.allPosts.filter(p => p.agendado && normStatus(p.status) !== 'publicado') },
+  ];
+  wrap.innerHTML = `<div class="simple-wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+      <div style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600">Modo simples</div>
+      <button class="btn" id="simple-back-btn">← Ver completo</button>
+    </div>
+    ${sections.map(s => `
+      <div class="simple-section">
+        <div class="simple-section-title">
+          ${s.icon} ${s.title}
+          <span class="simple-section-count">${s.posts.length}</span>
+        </div>
+        ${s.posts.length === 0
+          ? '<div class="simple-empty">Nada aqui por enquanto</div>'
+          : s.posts.map(p => {
+              const color = PILAR_COLOR[p.pilar] || '#c9a44a';
+              return `<div class="simple-post" data-pid="${p.id}">
+                <div class="simple-post-color" style="background:${color}"></div>
+                <div class="simple-post-info">
+                  <div class="simple-post-title">${p.tema || 'Sem título'}</div>
+                  <div class="simple-post-meta">${p.formato || ''} · ${p.data ? fmtDateBR(p.data) : ''}</div>
+                </div>
+              </div>`;
+            }).join('')}
+      </div>`).join('')}
+  </div>`;
+  wrap.querySelectorAll('.simple-post[data-pid]').forEach(el => {
+    el.addEventListener('click', () => openModal(el.dataset.pid));
+  });
+  wrap.querySelector('#simple-back-btn').addEventListener('click', () => {
+    dashSimple = false;
+    renderDashboard();
+  });
+}
+
+function renderDashboard() {
+  const wrap = document.getElementById('dash-view');
+  if (!wrap) return;
+  if (dashSimple) { renderSimpleMode(wrap); return; }
+
+  const today      = new Date().toISOString().slice(0,10);
+  const now        = new Date();
+  const dow        = now.getDay();
+  const rhythm     = RHYTHM_DOW[dow];
+  const todayPosts = STATE.allPosts.filter(p => p.data === today && normStatus(p.status) !== 'reaproveitar');
+  const latePosts  = STATE.allPosts.filter(p => isLate(p));
+  const nextPosts  = STATE.allPosts
+    .filter(p => p.data > today && !['publicado','reaproveitar'].includes(normStatus(p.status)))
+    .sort((a,b) => a.data.localeCompare(b.data))
+    .slice(0,3);
+
+  const actions = [
+    { key:'roteiro',  icon:'✍️', label:'Roteirizar' },
+    { key:'producao', icon:'🎨', label:'Produzir' },
+    { key:'legenda',  icon:'📝', label:'Escrever legenda' },
+    { key:'revisao',  icon:'👁', label:'Revisar' },
+    { key:'agendar',  icon:'📅', label:'Agendar' },
+  ];
+
+  const dateStr = now.toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  const color   = rhythm ? (PILAR_COLOR[rhythm.pilar] || 'var(--rose)') : 'var(--rose)';
+
+  const { scores, alerts } = getSmartInsights();
+  const top = scores[0];
+  let plannerHTML = '';
+  if (STATE.allPosts.length > 0) {
+    let recText = '';
+    if (top) {
+      if (top.days === null) {
+        recText = `Você nunca publicou <strong>${top.pilar}</strong> — este pilar representa ${top.pct}% do mix estratégico.`;
+      } else if (top.deficit > 0 && top.days >= 5) {
+        recText = `Priorize <strong>${top.pilar}</strong> — está há <strong>${top.days} dias</strong> sem publicar e faltam <strong>${top.deficit}</strong> para a meta do mês.`;
+      } else if (top.deficit > 0) {
+        recText = `Faltam <strong>${top.deficit}</strong> posts de <strong>${top.pilar}</strong> para atingir a meta deste mês.`;
+      } else if (top.days >= 7) {
+        recText = `Você está há <strong>${top.days} dias</strong> sem publicar <strong>${top.pilar}</strong>. É hora de retomar!`;
+      }
+    }
+    const alertsHTML = alerts.map(a => {
+      const c = PILAR_COLOR[a.pilar] || '#c9a44a';
+      const txt = a.days === null
+        ? `Nunca publicou <strong>${a.pilar}</strong>`
+        : `Há <strong>${a.days} dias</strong> sem publicar <strong>${a.pilar}</strong>`;
+      return `<div class="dash-planner-alert"><span style="color:${c}">●</span>${txt}</div>`;
+    }).join('');
+    plannerHTML = `<div class="dash-planner">
+      ${recText
+        ? `<div class="dash-planner-rec"><div class="dash-planner-rec-label">Próximo post recomendado</div><div class="dash-planner-rec-text">${recText}</div></div>`
+        : `<div class="dash-planner-ok">✓ Seu mix de conteúdo está equilibrado este mês.</div>`}
+      ${alertsHTML}
+    </div>`;
+  }
+
+  wrap.innerHTML = `<div class="dash-wrap">
+    <div class="dash-header">
+      <button class="btn dash-simple-btn" id="dash-simple-btn">Modo simples</button>
+      <div class="dash-greeting">${getGreeting()}</div>
+      <div class="dash-date-line">${dateStr}</div>
+      ${rhythm ? `<div class="dash-sugestao" style="border-color:${color}33;background:${color}10">
+        <div class="dash-sugestao-icon" style="color:${color}">●</div>
+        <div class="dash-sugestao-text">
+          <strong style="color:${color}">Hoje é dia de ${rhythm.pilar}</strong>
+          <span>${rhythm.motivo}</span>
+        </div>
+      </div>` : ''}
+    </div>
+
+    ${plannerHTML}
+
+    <div class="dash-actions">
+      ${actions.map(a => {
+        const n = STATE.allPosts.filter(p => normStatus(p.status) === a.key).length;
+        return `<div class="dash-action-card" data-gostatus="${a.key}">
+          <div class="dash-action-icon">${a.icon}</div>
+          <div class="dash-action-count ${n===0?'zero':''}">${n}</div>
+          <div class="dash-action-label">${a.label}</div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="dash-cols">
+      <div class="dash-section">
+        <div class="dash-section-title">Posts de hoje</div>
+        ${todayPosts.length === 0
+          ? '<div class="dash-empty">Nenhum post planejado para hoje</div>'
+          : todayPosts.map(p => renderDashPost(p)).join('')}
+      </div>
+      <div class="dash-section">
+        <div class="dash-section-title">Alertas de atraso</div>
+        ${latePosts.length === 0
+          ? '<div class="dash-empty">Tudo em dia ✓</div>'
+          : latePosts.map(p => `
+            <div class="dash-alert-item" data-pid="${p.id}">
+              <div class="dash-alert-text">
+                <strong>${p.tema || 'Sem título'}</strong>
+                <span>${lateLabel(p)} · ${p.formato || ''}</span>
+              </div>
+              <span style="color:var(--terracota)">→</span>
+            </div>`).join('')}
+      </div>
+    </div>
+
+    ${nextPosts.length > 0 ? `<div class="dash-section">
+      <div class="dash-section-title">Próximos conteúdos</div>
+      <div class="dash-next-row">
+        ${nextPosts.map(p => {
+          const c = PILAR_COLOR[p.pilar] || '#c9a44a';
+          const d = daysUntil(p.data);
+          const dl = d === 0 ? 'hoje' : d === 1 ? 'amanhã' : `em ${d} dias`;
+          return `<div class="dash-next-card" data-pid="${p.id}">
+            <div class="dash-next-dias">${dl}</div>
+            <div class="dash-next-titulo">${p.tema || 'Sem título'}</div>
+            <div class="dash-next-pilar" style="color:${c}">${p.pilar}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>` : ''}
+  </div>`;
+
+  wrap.querySelectorAll('[data-pid]').forEach(el => {
+    el.addEventListener('click', () => openModal(el.dataset.pid));
+  });
+  wrap.querySelectorAll('.dash-action-card').forEach(card => {
+    card.addEventListener('click', () => {
+      STATE.view = 'kanban';
+      STATE.activeNet = 'instagram';
+      renderAll();
+    });
+  });
+  wrap.querySelector('#dash-simple-btn').addEventListener('click', () => {
+    dashSimple = true;
+    renderDashboard();
+  });
+}
+
+/* ───────────────────────── BUSCA GLOBAL ───────────────────────── */
+
+function highlight(text, query) {
+  if (!text || !query) return text || '';
+  const esc = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${esc})`, 'gi'), '<mark>$1</mark>');
+}
+
+const SEARCH_FIELDS = ['tema','legenda','hashtags','objetivo','pilar','formato','cta','roteiro',
+  'publico_alvo','dor','briefing_visual','story_apoio','observacoes','variacao_legenda',
+  'estrutura_slides','texto_capa'];
+
+function performSearch(query, posts) {
+  if (!query || query.length < 2) return [];
+  const q = query.toLowerCase();
+  return posts
+    .filter(p => SEARCH_FIELDS.some(f => (p[f] || '').toLowerCase().includes(q)))
+    .map(p => {
+      const matchField = SEARCH_FIELDS.find(f => (p[f] || '').toLowerCase().includes(q));
+      const raw = p[matchField] || '';
+      const idx = raw.toLowerCase().indexOf(q);
+      const start = Math.max(0, idx - 60);
+      const end = Math.min(raw.length, idx + q.length + 80);
+      const snippet = (start > 0 ? '…' : '') + raw.slice(start, end) + (end < raw.length ? '…' : '');
+      return { post: p, snippet, matchField };
+    });
+}
+
+function renderSearchView() {
+  const wrap = document.getElementById('search-view');
+  if (!wrap) return;
+
+  wrap.innerHTML = `<div class="search-wrap">
+    <div class="search-bar-wrap">
+      <input type="text" class="search-input" id="search-input"
+        placeholder="Buscar por título, legenda, hashtag, pilar, roteiro..."
+        autocomplete="off">
+    </div>
+    <div class="search-filters">
+      <button class="chip-filter active" data-sf="all">Todos os pilares</button>
+      ${Object.keys(PILAR_COLOR).map(p => `<button class="chip-filter" data-sf="${p}">${p}</button>`).join('')}
+    </div>
+    <div id="search-results" class="search-results">
+      <div class="search-empty">Digite para buscar entre ${STATE.allPosts.length} posts</div>
+    </div>
+  </div>`;
+
+  let activePilar = 'all';
+
+  const doSearch = () => {
+    const query = wrap.querySelector('#search-input').value.trim();
+    const resultsEl = wrap.querySelector('#search-results');
+    let pool = activePilar === 'all' ? STATE.allPosts : STATE.allPosts.filter(p => p.pilar === activePilar);
+
+    if (query.length < 2) {
+      resultsEl.innerHTML = `<div class="search-empty">Digite para buscar entre ${pool.length} posts</div>`;
+      return;
+    }
+
+    const matches = performSearch(query, pool);
+    if (matches.length === 0) {
+      resultsEl.innerHTML = `<div class="search-empty">Nenhum resultado para "<strong style="color:var(--cream)">${query}</strong>"</div>`;
+      return;
+    }
+
+    resultsEl.innerHTML = `
+      <div style="font-size:.7rem;color:rgba(253,248,243,.32);margin-bottom:14px;font-weight:700">
+        ${matches.length} resultado${matches.length !== 1 ? 's' : ''} para "<span style="color:var(--cream)">${query}</span>"
+      </div>
+      ${matches.map(({ post:p, snippet }) => {
+        const color  = PILAR_COLOR[p.pilar] || '#c9a44a';
+        const status = STATUSES.find(s => s.key === normStatus(p.status));
+        return `<div class="search-result" data-pid="${p.id}">
+          <div class="search-result-title">${highlight(p.tema || 'Sem título', query)}</div>
+          <div class="search-result-meta">
+            <span style="color:${color};font-weight:700">${p.pilar || ''}</span>
+            ${p.formato ? `<span>${p.formato}</span>` : ''}
+            ${p.data ? `<span>${fmtDateBR(p.data)}</span>` : ''}
+            ${status ? `<span style="color:${status.color}">${status.label}</span>` : ''}
+          </div>
+          ${snippet ? `<div class="search-result-snippet">${highlight(snippet, query)}</div>` : ''}
+        </div>`;
+      }).join('')}`;
+
+    resultsEl.querySelectorAll('.search-result[data-pid]').forEach(el => {
+      el.addEventListener('click', () => openModal(el.dataset.pid));
+    });
+  };
+
+  wrap.querySelector('#search-input').addEventListener('input', doSearch);
+  wrap.querySelectorAll('.chip-filter[data-sf]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      wrap.querySelectorAll('.chip-filter[data-sf]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activePilar = btn.dataset.sf;
+      doSearch();
+    });
+  });
+
+  wrap.querySelector('#search-input').focus();
 }
 
 /* ───────────────────────── MIX STRIP ───────────────────────── */
@@ -824,14 +1764,28 @@ function renderMixStrip() {
     return d.getFullYear() === year && d.getMonth() === month;
   });
 
+  const todayStr = new Date().toISOString().slice(0,10);
   const cardsHTML = PLANEJAMENTO.map(pl => {
-    const color = PILAR_COLOR[pl.pilar] || '#c9a44a';
-    const planned = monthPosts.filter(p => p.pilar === pl.pilar).length;
+    const color     = PILAR_COLOR[pl.pilar] || '#c9a44a';
+    const planned   = monthPosts.filter(p => p.pilar === pl.pilar).length;
     const published = monthPosts.filter(p => p.pilar === pl.pilar && p.status === 'publicado').length;
-    const barPct = Math.min(100, Math.round((planned / pl.meta) * 100));
+    const barPct    = Math.min(100, Math.round((planned / pl.meta) * 100));
     let statusClass = 'under', statusText = 'nenhum planejado';
     if (planned >= pl.meta) { statusClass = 'ok'; statusText = '✓ meta atingida'; }
     else if (planned > 0) { statusClass = 'warn'; statusText = `${pl.meta - planned} ainda faltam`; }
+
+    const lastPub = STATE.allPosts
+      .filter(p => p.pilar === pl.pilar && p.status === 'publicado')
+      .sort((a,b) => b.data.localeCompare(a.data))[0];
+    let daysSinceClass = 'ok', daysSinceText = '';
+    if (!lastPub) {
+      daysSinceClass = 'late'; daysSinceText = 'Nunca publicado';
+    } else {
+      const d = Math.round((new Date(todayStr+'T00:00:00') - new Date(lastPub.data+'T00:00:00')) / 86400000);
+      daysSinceText = d === 0 ? 'Publicado hoje' : d === 1 ? 'Publicado ontem' : `${d} dias sem publicar`;
+      daysSinceClass = d >= 10 ? 'late' : d >= 5 ? 'warn' : 'ok';
+    }
+
     return `<div class="mix-card">
       <div class="mix-card-top">
         <span class="mix-pilar-name" style="color:${color}">${pl.pilar}</span>
@@ -843,6 +1797,7 @@ function renderMixStrip() {
       </div>
       <div class="mix-bar-track"><div class="mix-bar-fill" style="width:${barPct}%;background:${color}"></div></div>
       <div class="mix-status ${statusClass}">${statusText}</div>
+      <div class="mix-days-since ${daysSinceClass}">${daysSinceText}</div>
     </div>`;
   }).join('');
 
@@ -872,7 +1827,7 @@ function renderCalendarView() {
   const dowLabels = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 
   // Apenas posts prontos para agendar e publicados, todos os canais
-  const calPosts = STATE.allPosts.filter(p => p.status === 'pronto' || p.status === 'publicado');
+  const calPosts = STATE.allPosts.filter(p => normStatus(p.status) === 'agendar' || p.status === 'publicado');
 
   const itemsByDate = {};
   calPosts.forEach(p => {
@@ -901,7 +1856,7 @@ function renderCalendarView() {
       return `<div class="cal-post-pill" style="background:${color}${pub?'88':'cc'};" data-pid="${item.post.id}">${pub ? '✓ ' : ''}${item.post.tema}</div>`;
     }).join('');
     const more = dayItems.length > maxShow ? `<div class="cal-more">+${dayItems.length - maxShow} mais</div>` : '';
-    dayEls.push(`<div class="cal-day${isToday?' today':''}"><div class="cal-day-num">${d}</div>${pills}${more}</div>`);
+    dayEls.push(`<div class="cal-day${isToday?' today':''}" data-date="${dateStr}"><div class="cal-day-num">${d}</div>${pills}${more}</div>`);
   }
   const remaining = dayEls.length % 7 === 0 ? 0 : 7 - (dayEls.length % 7);
   for (let d = 1; d <= remaining; d++) {
@@ -932,6 +1887,13 @@ function renderCalendarView() {
     const post = STATE.allPosts.find(p => String(p.id) === pill.dataset.pid);
     if (post) pill.addEventListener('click', () => openModal(post.id));
   });
+  wrap.querySelectorAll('.cal-day[data-date]').forEach(day => {
+    day.addEventListener('click', e => {
+      if (e.target.closest('.cal-post-pill')) return;
+      pendingNewPostDate = day.dataset.date;
+      openModal(null);
+    });
+  });
 }
 
 function changeMonth(delta) {
@@ -957,31 +1919,31 @@ function renderReportsView() {
   if (!wrap) return;
 
   const all = STATE.allPosts;
-  const total       = all.length;
-  const totPlanejar  = all.filter(p => p.status === 'planejar').length;
-  const totDesign    = all.filter(p => p.status === 'design').length;
-  const totPronto    = all.filter(p => p.status === 'pronto').length;
-  const totAgendado  = all.filter(p => p.agendado).length;
-  const totPublicado = all.filter(p => p.status === 'publicado').length;
+  const total           = all.length;
+  const totCriacao      = all.filter(p => { const s = normStatus(p.status); return s !== 'publicado' && s !== 'agendar' && s !== 'reaproveitar'; }).length;
+  const totAgendar      = all.filter(p => normStatus(p.status) === 'agendar').length;
+  const totAgendado     = all.filter(p => p.agendado).length;
+  const totPublicado    = all.filter(p => p.status === 'publicado').length;
+  const totReaproveitar = all.filter(p => normStatus(p.status) === 'reaproveitar').length;
 
   const pilarStats = {};
   PLANEJAMENTO.forEach(pl => {
-    pilarStats[pl.pilar] = { planejar:0, design:0, pronto:0, agendado:0, publicado:0 };
+    pilarStats[pl.pilar] = { criacao:0, agendar:0, agendado:0, publicado:0 };
   });
   all.forEach(p => {
     const k = p.pilar;
-    if (!pilarStats[k]) pilarStats[k] = { planejar:0, design:0, pronto:0, agendado:0, publicado:0 };
-    if (p.status === 'planejar')  pilarStats[k].planejar++;
-    if (p.status === 'design')    pilarStats[k].design++;
-    if (p.status === 'pronto')    pilarStats[k].pronto++;
-    if (p.agendado)               pilarStats[k].agendado++;
-    if (p.status === 'publicado') pilarStats[k].publicado++;
+    const s = normStatus(p.status);
+    if (!pilarStats[k]) pilarStats[k] = { criacao:0, agendar:0, agendado:0, publicado:0 };
+    if (s !== 'publicado' && s !== 'agendar' && s !== 'reaproveitar') pilarStats[k].criacao++;
+    if (s === 'agendar')   pilarStats[k].agendar++;
+    if (p.agendado)        pilarStats[k].agendado++;
+    if (s === 'publicado') pilarStats[k].publicado++;
   });
 
   const cardsHTML = PLANEJAMENTO.map(pl => {
     const color = PILAR_COLOR[pl.pilar] || '#c9a44a';
-    const s = pilarStats[pl.pilar] || { planejar:0, design:0, pronto:0, agendado:0, publicado:0 };
-    const filled = s.planejar + s.design + s.pronto + s.publicado;
+    const s = pilarStats[pl.pilar] || { criacao:0, agendar:0, agendado:0, publicado:0 };
+    const filled = s.criacao + s.agendar + s.publicado;
     const barPct = Math.min(100, Math.round((filled / pl.meta) * 100));
     return `<div class="rel-card">
       <div class="rel-card-head">
@@ -989,9 +1951,8 @@ function renderReportsView() {
         <span class="rel-meta-badge">${pl.pct}% do mix · meta ${pl.meta}</span>
       </div>
       <div class="rel-stats">
-        <div><div class="rel-stat-n">${s.planejar}</div><div class="rel-stat-l">A planejar</div></div>
-        <div><div class="rel-stat-n">${s.design}</div><div class="rel-stat-l">Produção</div></div>
-        <div><div class="rel-stat-n">${s.pronto}</div><div class="rel-stat-l">Pronto</div></div>
+        <div><div class="rel-stat-n">${s.criacao}</div><div class="rel-stat-l">Em criação</div></div>
+        <div><div class="rel-stat-n">${s.agendar}</div><div class="rel-stat-l">Pronto</div></div>
         <div><div class="rel-stat-n" style="color:${color}">${s.agendado}</div><div class="rel-stat-l">Agendado</div></div>
         <div><div class="rel-stat-n" style="color:var(--green)">${s.publicado}</div><div class="rel-stat-l">Publicado</div></div>
       </div>
@@ -1010,16 +1971,56 @@ function renderReportsView() {
     </tr>`;
   }).join('');
 
+  const { daysSince } = getSmartInsights();
+  const funilCounts = { topo:0, meio:0, fundo:0 };
+  all.forEach(p => { const f = FUNIL_MAP[p.pilar]; if (f) funilCounts[f]++; });
+  const funilTotal = Math.max(1, funilCounts.topo + funilCounts.meio + funilCounts.fundo);
+  const weeks = [3,2,1,0].map(i => {
+    const eDate = new Date(); eDate.setDate(eDate.getDate() - i*7);
+    const sDate = new Date(eDate); sDate.setDate(sDate.getDate() - 6);
+    const count = all.filter(p => p.status==='publicado' && p.data>=sDate.toISOString().slice(0,10) && p.data<=eDate.toISOString().slice(0,10)).length;
+    return { label: i===0?'Essa sem.':i===1?'Ant.':'-'+i+' sem.', count };
+  });
+  const maxWeek = Math.max(...weeks.map(w=>w.count), 1);
+  const consistencyGrid = PLANEJAMENTO.map(pl => {
+    const d = daysSince[pl.pilar];
+    const c = d===null||d>=10 ? 'var(--terracota)' : d>=5 ? 'var(--gold)' : 'var(--green)';
+    const pc = PILAR_COLOR[pl.pilar] || '#c9a44a';
+    return `<div class="consistency-card"><div class="consistency-n" style="color:${c}">${d===null?'∞':d}</div><div class="consistency-label">dias sem publicar</div><div class="consistency-pilar" style="color:${pc}">${pl.pilar}</div></div>`;
+  }).join('');
+  const funilItems = [
+    { key:'topo',  label:'Topo de funil',  sub:'Educação + Bastidores', color:'#9b7fd1' },
+    { key:'meio',  label:'Meio de funil',   sub:'Prova Social',           color:'#5aa68f' },
+    { key:'fundo', label:'Fundo de funil',  sub:'Venda Direta',           color:'#d4849a' },
+  ].map(f => {
+    const n = funilCounts[f.key]; const pct = Math.round(n/funilTotal*100);
+    return `<div class="funil-item"><div class="funil-n" style="color:${f.color}">${n}</div><div class="funil-l">${f.label}</div><div class="funil-sub">${f.sub}</div><div class="funil-bar"><div class="funil-fill" style="width:${pct}%;background:${f.color}"></div></div></div>`;
+  }).join('');
+  const weekBars = weeks.map(w => {
+    const h = Math.round(w.count/maxWeek*100);
+    return `<div class="week-bar-wrap"><div class="week-bar-n">${w.count}</div><div class="week-bar" style="height:${h}%"></div><div class="week-bar-label">${w.label}</div></div>`;
+  }).join('');
+
   wrap.innerHTML = `
     <div class="rel-section">
       <div class="rel-section-title">Visão geral — todos os canais</div>
       <div class="rel-overview">
         <div class="rel-ov-item"><div class="rel-ov-n">${total}</div><div class="rel-ov-l">Total</div></div>
-        <div class="rel-ov-item"><div class="rel-ov-n" style="color:rgba(253,248,243,.5)">${totPlanejar}</div><div class="rel-ov-l">A planejar</div></div>
-        <div class="rel-ov-item"><div class="rel-ov-n" style="color:var(--gold)">${totDesign}</div><div class="rel-ov-l">Em produção</div></div>
-        <div class="rel-ov-item"><div class="rel-ov-n" style="color:#9b7fd1">${totPronto}</div><div class="rel-ov-l">Pronto p/ agendar</div></div>
+        <div class="rel-ov-item"><div class="rel-ov-n" style="color:var(--gold)">${totCriacao}</div><div class="rel-ov-l">Em criação</div></div>
+        <div class="rel-ov-item"><div class="rel-ov-n" style="color:#9b7fd1">${totAgendar}</div><div class="rel-ov-l">Pronto p/ agendar</div></div>
         <div class="rel-ov-item"><div class="rel-ov-n" style="color:var(--rose)">${totAgendado}</div><div class="rel-ov-l">Agendados</div></div>
         <div class="rel-ov-item"><div class="rel-ov-n" style="color:var(--green)">${totPublicado}</div><div class="rel-ov-l">Publicados</div></div>
+        <div class="rel-ov-item"><div class="rel-ov-n" style="color:var(--ink-faint)">${totReaproveitar}</div><div class="rel-ov-l">Reaproveitar</div></div>
+      </div>
+    </div>
+
+    <div class="rel-section">
+      <div class="rel-section-title">Consistência e frequência</div>
+      <div class="consistency-grid">${consistencyGrid}</div>
+      <div class="funil-row">${funilItems}</div>
+      <div class="week-section">
+        <div class="week-chart-title">Frequência de publicação — últimas 4 semanas</div>
+        <div class="week-chart">${weekBars}</div>
       </div>
     </div>
 
